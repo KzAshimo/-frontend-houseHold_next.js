@@ -9,16 +9,16 @@ const Header = () => {
   const { user, isLoading: isUserLoading, error } = useUser();
 
   return (
-    <header className="bg-white shadow px-6 py-4 flex items-center">
+    <header className="bg-slate-800/40 shadow px-6 py-4 flex items-center">
       {/* 左側：ユーザー情報 */}
-      <div className="flex-1 text-gray-700 text-lg font-semibold">
+      <div className="flex-1 text-slate-100 text-lg font-semibold">
         {isUserLoading ? (
           <span className="text-gray-500">読み込み中...</span>
         ) : error ? (
           <span className="text-red-500">ユーザー情報取得失敗</span>
         ) : user ? (
           <>
-            ようこそ <strong>{user.name}</strong> さん
+            <strong>{user.name}</strong> さん
           </>
         ) : (
           <span className="text-gray-500">ゲスト</span>
