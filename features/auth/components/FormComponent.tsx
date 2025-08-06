@@ -1,7 +1,7 @@
 "use client";
 
 import { useForm } from "react-hook-form";
-import { useLogin } from "../hooks/useLoginHook";
+import useLogin from "../hooks/useLoginHook";
 
 type LoginFormInputs = {
   email: string;

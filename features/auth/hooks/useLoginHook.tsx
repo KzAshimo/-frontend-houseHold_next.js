@@ -15,7 +15,7 @@ type ErrorResponse = {
   errors?: { [key: string]: string[] };
 };
 
-export const useLogin = () => {
+const useLogin = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -46,3 +46,5 @@ export const useLogin = () => {
 
   return { login, isLoading, error };
 };
+
+export default useLogin;

@@ -10,7 +10,7 @@ type ErrorResponse = {
   message: string;
 };
 
-export const useLogout = () => {
+const useLogout = () => {
   const router = useRouter();
   const {mutate} = useSWRConfig();
   const [isLoading, setIsLoading] = useState(false);
@@ -42,3 +42,5 @@ export const useLogout = () => {
 
   return { logout, isLoading, error };
 };
+
+export default useLogout;
