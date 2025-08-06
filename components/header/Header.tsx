@@ -1,7 +1,7 @@
 "use client";
 
-import { useLogout } from "@/features/auth/hooks/useLogoutHook";
 import { Button } from "@/components/items/button/Button";
+import useLogout from "@/features/auth/hooks/useLogoutHook";
 // import Link from "next/link";
 
 const Header = () => {
