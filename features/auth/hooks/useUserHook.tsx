@@ -27,10 +27,10 @@ const useUser = () => {
     setError(null);
 
     try {
-      const res = await axios.get<User>("/api/v1/user/show", {
+      const res = await axios.get<{data: User}>("/api/v1/user/show", {
         withCredentials: true,
       });
-      setUser(res.data);
+      setUser(res.data.data);
     } catch (err) {
       if (err instanceof AxiosError && err.response) {
         const responseData = err.response.data as ErrorResponse;
