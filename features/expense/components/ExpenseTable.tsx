@@ -36,7 +36,7 @@ const ExpenseTable = () => {
   if (error) return <div className="text-red-500">データ取得失敗: {error}</div>;
 
   return (
-    <div className="mt-3 space-y-6">
+    <div className="m-5 space-y-6 ">
       {months.map((month) => (
         <div key={month}>
           {/* 月のタイトル */}
@@ -50,7 +50,7 @@ const ExpenseTable = () => {
                 className="flex-shrink-0 w-48 bg-white shadow rounded-lg border p-4 cursor-pointer hover:shadow-lg transition"
                 onClick={() => console.log(`モーダルで ${month} の ${cat} を表示`)}
               >
-                <div className="text-sm text-gray-500">{cat}</div>
+                <div className="text-ml text-gray-500">{cat}</div>
                 <div className="text-xl font-bold text-gray-800 mt-1">
                   {getAmount(month, cat).toLocaleString()} 円
                 </div>
