@@ -92,7 +92,7 @@ const ExpenseTable = () => {
                   <th className="px-1 py-2">入力者</th>
                   <th className="px-1 py-2">買い物</th>
                   <th className="px-1 py-2">メモ</th>
-                  <th className="px-1 py-2 text-right font-bold text-red-700">金額</th>
+                  <th className="px-1 py-2 text-right font-bold text-red-100">金額</th>
                 </tr>
               </thead>
               <tbody>
@@ -104,7 +104,7 @@ const ExpenseTable = () => {
                     <td className="px-1 py-2" >{e.user}</td>
                     <td className="px-1 py-2">{e.content}</td>
                     <td className="px-1 py-2">{e.memo || "（メモなし）"}</td>
-                    <td className="px-1 py-2 text-right font-bold text-red-700">
+                    <td className="px-1 py-2 text-right font-bold text-red-100">
                       {e.amount.toLocaleString()} 円
                     </td>
                   </tr>
