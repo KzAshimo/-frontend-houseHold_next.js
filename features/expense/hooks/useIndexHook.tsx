@@ -7,6 +7,7 @@ type Expense = {
   id: number;
   user: string;
   category: string;
+  content: string;
   amount: number;
   memo: string;
   created_at: string;
