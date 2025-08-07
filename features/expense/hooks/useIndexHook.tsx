@@ -28,6 +28,8 @@ const useExpenseIndex = () => {
     { revalidateOnFocus: false }
   );
 
+  console.log(data);
+
   return {
     expenses: data ?? [],
     isLoading,
