@@ -22,7 +22,7 @@ const ExpenseFormFields = () => {
       <div>
         <label
           htmlFor="categoryId"
-          className="block text-sm font-medium text-gray-700"
+          className="block text-sm font-medium text-slate-100"
         >
           カテゴリー
         </label>
@@ -30,15 +30,15 @@ const ExpenseFormFields = () => {
           id="categoryId"
           {...register("categoryId", { required: "カテゴリーは必須です" })}
           disabled={isLoading || !!categoryError}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm disabled:bg-gray-100"
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm disabled:bg-slate-100"
         >
           {isLoading && <option>読み込み中...</option>}
           {categoryError && <option>カテゴリーの取得に失敗しました</option>}
           {!isLoading && !categoryError && (
             <>
-              <option value="">選択してください</option>
+              <option value="" className="bg-slate-500">選択してください</option>
               {categories.map((category) => (
-                <option key={category.id} value={category.id}>
+                <option className="bg-slate-500" key={category.id} value={category.id}>
                   {category.name}
                 </option>
               ))}
@@ -58,7 +58,7 @@ const ExpenseFormFields = () => {
       <div>
         <label
           htmlFor="amount"
-          className="block text-sm font-medium text-gray-700"
+          className="block text-sm font-medium text-slate-100"
         >
           金額
         </label>
@@ -79,7 +79,7 @@ const ExpenseFormFields = () => {
       <div>
         <label
           htmlFor="content"
-          className="block text-sm font-medium text-gray-700"
+          className="block text-sm font-medium text-slate-100"
         >
           内容
         </label>
@@ -99,7 +99,7 @@ const ExpenseFormFields = () => {
       <div>
         <label
           htmlFor="memo"
-          className="block text-sm font-medium text-gray-700"
+          className="block text-sm font-medium text-slate-100"
         >
           メモ (任意)
         </label>

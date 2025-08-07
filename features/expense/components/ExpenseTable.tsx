@@ -66,8 +66,8 @@ const ExpenseTable = () => {
                 className="flex-shrink-0 w-48 bg-violet-500/20 shadow rounded-lg border p-4 cursor-pointer hover:shadow-lg transition"
                 onClick={() => handleCardClick(month, cat)}
               >
-                <div className="text-2xl font-bold text-gray-300">{cat}</div>
-                <div className="text-xl font-bold text-gray-300 mt-1">
+                <div className="text-2xl font-bold text-white">{cat}</div>
+                <div className="text-xl font-bold text-white mt-1">
                   {getAmount(month, cat).toLocaleString()} 円
                 </div>
                 <div className="text-xs text-gray-300 mt-3">
@@ -97,7 +97,7 @@ const ExpenseTable = () => {
               </thead>
               <tbody>
                 {getDetails(selectedMonth, selectedCategory).map((e) => (
-                  <tr key={e.id} className="border-b hover:bg-gray-50">
+                  <tr key={e.id} className="border-b">
                     <td className="px-4 py-2">
                       {new Date(e.created_at).toLocaleDateString()}
                     </td>

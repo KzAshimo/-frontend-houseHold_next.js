@@ -10,17 +10,17 @@ type Props = {
   children: ReactNode;
 };
 
-export const InputFormModal = ({ isOpen, onClose, title, children }: Props) => {
+const InputFormModal = ({ isOpen, onClose, title, children }: Props) => {
   return (
     <Dialog as="div" open={isOpen} onClose={onClose} className="relative z-50">
       {/* 1. 背景のオーバーレイ */}
       <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
 
       {/* 2. モーダル本体のコンテナ */}
-      <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
+      <div className="fixed inset-0 flex w-screen items-center justify-center p-4 text-slate-100">
         {/* 3. モーダルのパネル */}
-        <Dialog.Panel className="w-full max-w-md rounded-lg bg-white p-6 shadow-xl">
-          <Dialog.Title className="text-lg font-bold text-gray-900">
+        <Dialog.Panel className="w-full max-w-md rounded-lg bg-slate-500/20 p-6 shadow-xl text-slate-100">
+          <Dialog.Title className="text-xl font-bold text-slate-100">
             {title}
           </Dialog.Title>
 
@@ -31,3 +31,5 @@ export const InputFormModal = ({ isOpen, onClose, title, children }: Props) => {
     </Dialog>
   );
 };
+
+export default InputFormModal;

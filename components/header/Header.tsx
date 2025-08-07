@@ -3,6 +3,7 @@
 import { Button } from "@/components/items/button/Button";
 import useLogout from "@/features/auth/hooks/useLogoutHook";
 import useUser from "@/features/auth/hooks/useUserHook";
+import AddExpense from "@/features/expense/components/AddExpense";
 
 const Header = () => {
   const { logout, isLoading: isLogoutLoading } = useLogout();
@@ -24,6 +25,8 @@ const Header = () => {
           <span className="text-gray-500">ゲスト</span>
         )}
       </div>
+
+      <AddExpense/>
 
       {/* 右側：ログアウトボタン */}
       <div>

@@ -21,7 +21,7 @@ export const Button: FC<Props> = ({
   const buttonClassName = clsx(
     "rounded",
     "hover:opacity-80",
-    color === "lime" && "bg-lime-500",
+    color === "lime" && "bg-lime-600",
     color === "danger" && "bg-danger-500",
     color === "rose" && "bg-rose-500",
     "text-white",

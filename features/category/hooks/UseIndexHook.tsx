@@ -1,6 +1,6 @@
 "use client";
 
-import axios from "axios";
+import axios from "@/lib/axios";
 import useSWR from "swr";
 
 type Category = {
