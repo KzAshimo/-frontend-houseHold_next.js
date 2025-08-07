@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@headlessui/react": "^2.2.7",
     "axios": "^1.11.0",
     "clsx": "^2.1.1",
     "js-cookie": "^3.0.5",
