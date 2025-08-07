@@ -1,11 +1,12 @@
 "use client";
 
-import axios, { AxiosError } from "axios";
+import axiosInstance from "@/lib/axios";
+import { AxiosError } from "axios";
 import { useState } from "react";
 
 type ExpensePayload = {
   userId: number;
-  categoryId: number;
+  category_id: number;
   amount: number;
   content: string;
   memo?: string;
@@ -24,7 +25,7 @@ const useExpenseStore = () => {
     setIsLoading(true);
     setError(null);
     try {
-      await axios.post("api/v1/expense/store", payload, {
+      await axiosInstance.post("api/v1/expense/store", payload, {
         withCredentials: true,
       });
     } catch (err) {

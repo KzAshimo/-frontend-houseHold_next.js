@@ -4,7 +4,7 @@ import StoreForm from "@/components/items/form/StoreForm";
 import useCategoryIndex from "@/features/category/hooks/UseIndexHook";
 
 type ExpenseFormData = {
-  categoryId: number;
+  category_id: number;
   amount: number;
   content: string;
   memo?: string;
@@ -28,7 +28,7 @@ const ExpenseFormFields = () => {
         </label>
         <select
           id="categoryId"
-          {...register("categoryId", { required: "カテゴリーは必須です" })}
+          {...register("category_id", { required: "カテゴリーは必須です" })}
           disabled={isLoading || !!categoryError}
           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm disabled:bg-slate-100"
         >
@@ -45,9 +45,9 @@ const ExpenseFormFields = () => {
             </>
           )}
         </select>
-        {errors.categoryId && (
+        {errors.category_id && (
           <p className="mt-1 text-sm text-red-600">
-            {errors.categoryId.message}
+            {errors.category_id.message}
           </p>
         )}
         {categoryError && (
