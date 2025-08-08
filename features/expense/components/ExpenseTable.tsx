@@ -4,6 +4,7 @@ import { useState } from "react";
 import useExpenseIndex from "@/features/expense/hooks/useIndexHook";
 import Modal from "@/components/items/modal/CategoryModal";
 import DeleteExpenseButton from "../items/DeleteExpenseButton";
+import UpdateExpenseModal from "./UpdateExoenseModal";
 
 const ExpenseTable = () => {
   const { expenses: initialExpense, isLoading, error } = useExpenseIndex();
@@ -111,6 +112,18 @@ const ExpenseTable = () => {
                     <td className="px-1 py-2 text-right font-bold text-red-100">
                       {e.amount.toLocaleString()} 円
                     </td>
+
+                    <td className="px-1 py-2 text-center">
+                      <UpdateExpenseModal
+                        expenseId={e.id}
+                        defaultValues={{
+                          amount: e.amount,
+                          content: e.content,
+                          memo: e.memo,
+                        }}
+                      />
+                    </td>
+
                     <td className="px-1 py-2 text-center">
                       <DeleteExpenseButton
                         expenseId={e.id}

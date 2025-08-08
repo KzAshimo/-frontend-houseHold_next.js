@@ -6,6 +6,7 @@ import useExpenseIndex from "../hooks/useIndexHook";
 import { useFormContext } from "react-hook-form";
 import StoreForm from "@/components/items/form/StoreForm";
 import InputFormModal from "@/components/items/modal/InputModal";
+import { Button } from "@/components/items/button/Button";
 
 type Props = {
   expenseId: number;
@@ -34,12 +35,13 @@ export default function UpdateExpenseModal({
 
   return (
     <>
-      <button
-        onClick={() => setIsOpen(true)}
-        className="px-3 py-1 bg-blue-500 text-white rounded"
+      <Button
+      type="button"
+        clickHandler={() => setIsOpen(true)}
+        color="lime"
       >
         編集
-      </button>
+      </Button>
 
       <InputFormModal
         isOpen={isOpen}
@@ -70,7 +72,7 @@ function AmountInput({ defaultValue }: { defaultValue: number }) {
         type="number"
         defaultValue={defaultValue}
         {...register("amount", { required: true })}
-        className="mt-1 block w-full rounded-md border-gray-300 text-black"
+        className="mt-1 block w-full rounded-md border-gray-300 text-slate-100"
       />
     </div>
   );
@@ -85,7 +87,7 @@ function ContentInput({ defaultValue }: { defaultValue: string }) {
         type="text"
         defaultValue={defaultValue}
         {...register("content", { required: true })}
-        className="mt-1 block w-full rounded-md border-gray-300 text-black"
+        className="mt-1 block w-full rounded-md border-gray-300 text-slate-100"
       />
     </div>
   );
@@ -100,7 +102,7 @@ function MemoInput({ defaultValue }: { defaultValue?: string }) {
         type="text"
         defaultValue={defaultValue}
         {...register("memo")}
-        className="mt-1 block w-full rounded-md border-gray-300 text-black"
+        className="mt-1 block w-full rounded-md border-gray-300 text-slate-100"
       />
     </div>
   );
