@@ -3,7 +3,7 @@
 import { Button } from "@/components/items/button/Button";
 import useLogout from "@/features/auth/hooks/useLogoutHook";
 import useUser from "@/features/auth/hooks/useUserHook";
-import AddExpense from "@/features/expense/components/AddExpense";
+import StoreExpenseButton from "@/features/expense/items/StoreExopenseButton";
 
 const Header = () => {
   const { logout, isLoading: isLogoutLoading } = useLogout();
@@ -26,7 +26,7 @@ const Header = () => {
         )}
       </div>
 
-      <AddExpense/>
+      <StoreExpenseButton/>
 
       {/* 右側：ログアウトボタン */}
       <div>
