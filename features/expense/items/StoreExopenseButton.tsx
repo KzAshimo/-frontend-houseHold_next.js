@@ -2,11 +2,11 @@
 
 import { useState } from "react";
 import { useSWRConfig } from "swr";
-import { ExpenseForm } from "./ExpenseForm";
+import { ExpenseForm } from "../components/ExpenseForm";
 import InputFormModal from "@/components/items/modal/InputModal";
 import { Button } from "@/components/items/button/Button";
 
-const AddExpense = () => {
+const StoreExpenseButton = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { mutate } = useSWRConfig();
 
@@ -37,4 +37,4 @@ const AddExpense = () => {
   );
 };
 
-export default AddExpense;
+export default StoreExpenseButton;

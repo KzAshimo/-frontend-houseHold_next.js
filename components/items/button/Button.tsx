@@ -4,7 +4,7 @@ import { FC } from "react";
 type Props = {
   children: React.ReactNode;
   type?: "button" | "submit";
-  color?: "lime" | "danger" | "rose";
+  color?: "lime" | "danger" | "rose" | "violet";
   clickHandler?: () => void;
   size?: "sm" | "md" | "lg";
   isDisabled?: boolean;
@@ -24,6 +24,7 @@ export const Button: FC<Props> = ({
     color === "lime" && "bg-lime-600",
     color === "danger" && "bg-danger-500",
     color === "rose" && "bg-rose-500",
+    color === "violet" && "bg-violet-500",
     "text-white",
     size === "sm" && "p-2 text-sm",
     size === "md" && "px-4 py-2 text-base",
