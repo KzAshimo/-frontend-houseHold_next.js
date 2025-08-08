@@ -4,7 +4,7 @@ import { useState } from "react";
 import useExpenseIndex from "@/features/expense/hooks/useIndexHook";
 import Modal from "@/components/items/modal/CategoryModal";
 import DeleteExpenseButton from "../items/DeleteExpenseButton";
-import UpdateExpenseModal from "./UpdateExoenseModal";
+import UpdateExpenseModal from "./UpdateExpenseModal";
 
 const ExpenseTable = () => {
   const { expenses: initialExpense, isLoading, error } = useExpenseIndex();
@@ -93,7 +93,7 @@ const ExpenseTable = () => {
                 <tr>
                   <th className="px-1 py-2">日付</th>
                   <th className="px-1 py-2">入力者</th>
-                  <th className="px-1 py-2">買い物</th>
+                  <th className="px-1 py-2">内容</th>
                   <th className="px-1 py-2">メモ</th>
                   <th className="px-1 py-2 text-right font-bold text-red-100">
                     金額
