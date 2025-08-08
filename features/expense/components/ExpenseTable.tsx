@@ -3,16 +3,18 @@
 import { useState } from "react";
 import useExpenseIndex from "@/features/expense/hooks/useIndexHook";
 import Modal from "@/components/items/modal/CategoryModal";
+import DeleteExpenseButton from "../items/DeleteExpenseButton";
 
 const ExpenseTable = () => {
-  const { expenses, isLoading, error } = useExpenseIndex();
+  const { expenses: initialExpense, isLoading, error } = useExpenseIndex();
+  const [expenses, setExpenses] = useState<typeof initialExpense>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedMonth, setSelectedMonth] = useState<string | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
   const months = Array.from(
     new Set(
-      expenses.map((e) =>
+      initialExpense.map((e) =>
         new Date(e.created_at).toLocaleString("ja-JP", {
           year: "numeric",
           month: "short",
@@ -21,10 +23,10 @@ const ExpenseTable = () => {
     )
   );
 
-  const categories = Array.from(new Set(expenses.map((e) => e.category)));
+  const categories = Array.from(new Set(initialExpense.map((e) => e.category)));
 
   const getAmount = (month: string, category: string) => {
-    return expenses
+    return initialExpense
       .filter(
         (e) =>
           new Date(e.created_at).toLocaleString("ja-JP", {
@@ -36,7 +38,7 @@ const ExpenseTable = () => {
   };
 
   const getDetails = (month: string, category: string) => {
-    return expenses.filter(
+    return initialExpense.filter(
       (e) =>
         new Date(e.created_at).toLocaleString("ja-JP", {
           year: "numeric",
@@ -92,7 +94,9 @@ const ExpenseTable = () => {
                   <th className="px-1 py-2">入力者</th>
                   <th className="px-1 py-2">買い物</th>
                   <th className="px-1 py-2">メモ</th>
-                  <th className="px-1 py-2 text-right font-bold text-red-100">金額</th>
+                  <th className="px-1 py-2 text-right font-bold text-red-100">
+                    金額
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -101,11 +105,21 @@ const ExpenseTable = () => {
                     <td className="px-4 py-2">
                       {new Date(e.created_at).toLocaleDateString()}
                     </td>
-                    <td className="px-1 py-2" >{e.user}</td>
+                    <td className="px-1 py-2">{e.user}</td>
                     <td className="px-1 py-2">{e.content}</td>
                     <td className="px-1 py-2">{e.memo || "（メモなし）"}</td>
                     <td className="px-1 py-2 text-right font-bold text-red-100">
                       {e.amount.toLocaleString()} 円
+                    </td>
+                    <td className="px-1 py-2 text-center">
+                      <DeleteExpenseButton
+                        expenseId={e.id}
+                        onDeleted={(id) => {
+                          setExpenses((prev) =>
+                            prev.filter((exp) => exp.id !== id)
+                          );
+                        }}
+                      />
                     </td>
                   </tr>
                 ))}
