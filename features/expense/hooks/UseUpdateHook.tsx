@@ -9,37 +9,48 @@ type ErrorResponse = {
   errors?: { [key: string]: string[] };
 };
 
-const useExpenseDelete = () => {
+export type UpdateExpensePayload = {
+  amount: number;
+  content: string;
+  memo?: string;
+};
+
+const useExpenseUpdate = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const deleteExpense = async (expenseId: number) => {
+  const updateExpense = async (
+    expenseId: number,
+    payload: UpdateExpensePayload
+  ): Promise<boolean> => {
     setIsLoading(true);
     setError(null);
 
     try {
-      await axiosInstance.delete(`api/v1/expense/${expenseId}`, {
+      await axiosInstance.put(`/api/v1/expense/${expenseId}`, payload, {
         withCredentials: true,
       });
+      return true;
     } catch (err) {
       if (err instanceof AxiosError && err.response) {
         const responseData = err.response.data as ErrorResponse;
-        setError(responseData.message || "削除を失敗しました。");
+        setError(responseData.message || "更新を失敗しました。");
       } else if (err instanceof Error) {
         setError(err.message);
       } else {
         setError("不明なエラーが発生しました。");
       }
+      return false;
     } finally {
       setIsLoading(false);
     }
   };
 
   return {
-    deleteExpense,
+    updateExpense,
     isLoading,
     error,
   };
 };
 
-export default useExpenseDelete;
+export default useExpenseUpdate;
