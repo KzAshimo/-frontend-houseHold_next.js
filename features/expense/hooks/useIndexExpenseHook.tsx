@@ -1,6 +1,6 @@
 "use client";
 
-import axios from "@/lib/axios";
+import fetcher from "@/lib/fetcher";
 import useSWR from "swr";
 
 type Expense = {
@@ -14,16 +14,8 @@ type Expense = {
   updated_at: string;
 };
 
-type ApiResponse<T> = { data: T };
-type ErrorResponse = { message: string };
-
-const fetcher = (url: string) =>
-  axios
-    .get<ApiResponse<Expense[]>>(url, { withCredentials: true })
-    .then((res) => res.data.data);
-
 const useExpenseIndex = () => {
-  const { data, error, isLoading, mutate } = useSWR<Expense[], ErrorResponse>(
+  const { data, error, isLoading, mutate } = useSWR<Expense[]>(
     "/api/v1/expense/index",
     fetcher,
     { revalidateOnFocus: false }

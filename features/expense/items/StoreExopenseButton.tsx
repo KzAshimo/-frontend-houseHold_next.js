@@ -2,9 +2,9 @@
 
 import { useState } from "react";
 import { useSWRConfig } from "swr";
-import { ExpenseForm } from "../components/ExpenseForm";
-import InputFormModal from "@/components/items/modal/InputModal";
-import { Button } from "@/components/items/button/Button";
+import { ExpenseForm } from "../components/expenseForm";
+import InputFormModal from "@/components/items/modal/inputModal";
+import { Button } from "@/components/items/button/button";
 
 const StoreExpenseButton = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);

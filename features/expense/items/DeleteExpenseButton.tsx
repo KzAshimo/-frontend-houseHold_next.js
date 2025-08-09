@@ -1,8 +1,8 @@
 "use client";
 
-import { Button } from "@/components/items/button/Button";
-import useExpenseDelete from "../hooks/useDeleteHook";
-import useExpenseIndex from "../hooks/useIndexHook";
+import { Button } from "@/components/items/button/button";
+import useExpenseDelete from "../hooks/useDeleteExpenseHook";
+import useExpenseIndex from "../hooks/useIndexExpenseHook";
 
 type Props = {
   expenseId: number;

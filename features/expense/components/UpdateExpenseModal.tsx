@@ -1,12 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import useExpenseUpdate from "../hooks/useUpdateHook";
-import useExpenseIndex from "../hooks/useIndexHook";
+import useExpenseUpdate from "../hooks/useUpdateExpenseHook";
+import useExpenseIndex from "../hooks/useIndexExpenseHook";
 import { useFormContext } from "react-hook-form";
-import StoreForm from "@/components/items/form/StoreForm";
-import InputFormModal from "@/components/items/modal/InputModal";
-import { Button } from "@/components/items/button/Button";
+import StoreForm from "@/components/items/form/storeForm";
+import InputFormModal from "@/components/items/modal/inputModal";
+import { Button } from "@/components/items/button/button";
 
 type Props = {
   expenseId: number;
