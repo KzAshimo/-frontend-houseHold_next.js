@@ -1,5 +1,5 @@
 import { useFormContext } from "react-hook-form";
-import useExpenseStore from "../hooks/useStoreHook";
+import useExpenseStore from "../hooks/useStoreExpenseHook";
 import StoreForm from "@/components/items/form/StoreForm";
 import useCategoryIndex from "@/features/category/hooks/UseIndexHook";
 
