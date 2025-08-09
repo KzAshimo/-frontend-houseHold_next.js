@@ -1,9 +1,9 @@
 "use client";
 
-import { Button } from "@/components/items/button/Button";
+import { Button } from "@/components/items/button/button";
 import useLogout from "@/features/auth/hooks/useLogoutHook";
 import useUser from "@/features/auth/hooks/useUserHook";
-import StoreExpenseButton from "@/features/expense/items/StoreExopenseButton";
+import StoreExpenseButton from "@/features/expense/items/storeExopenseButton";
 
 const Header = () => {
   const { logout, isLoading: isLogoutLoading } = useLogout();

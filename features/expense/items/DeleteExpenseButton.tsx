@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/components/items/button/Button";
+import { Button } from "@/components/items/button/button";
 import useExpenseDelete from "../hooks/useDeleteExpenseHook";
 import useExpenseIndex from "../hooks/useIndexExpenseHook";
 

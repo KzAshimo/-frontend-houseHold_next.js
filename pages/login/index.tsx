@@ -1,4 +1,4 @@
-import { Form } from "@/features/auth/components/FormComponent";
+import { Form } from "@/features/auth/components/formComponent";
 import "../../app/globals.css";
 
 const LoginPage = () => {

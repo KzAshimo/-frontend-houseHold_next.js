@@ -1,6 +1,6 @@
 import { useFormContext } from "react-hook-form";
 import useExpenseStore from "../hooks/useStoreExpenseHook";
-import StoreForm from "@/components/items/form/StoreForm";
+import StoreForm from "@/components/items/form/storeForm";
 import useCategoryIndex from "@/features/category/hooks/UseIndexHook";
 
 type ExpenseFormData = {

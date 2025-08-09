@@ -2,9 +2,9 @@
 
 import { useState } from "react";
 import useExpenseIndex from "@/features/expense/hooks/useIndexExpenseHook";
-import Modal from "@/components/items/modal/CategoryModal";
-import DeleteExpenseButton from "../items/DeleteExpenseButton";
-import UpdateExpenseModal from "./UpdateExpenseModal";
+import Modal from "@/components/items/modal/categoryModal";
+import DeleteExpenseButton from "../items/deleteExpenseButton";
+import UpdateExpenseModal from "./updateExpenseModal";
 
 const ExpenseTable = () => {
   const { expenses: initialExpense, isLoading, error } = useExpenseIndex();
