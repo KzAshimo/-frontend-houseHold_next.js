@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import useExpenseIndex from "@/features/expense/hooks/useIndexHook";
+import useExpenseIndex from "@/features/expense/hooks/useIndexExpenseHook";
 import Modal from "@/components/items/modal/CategoryModal";
 import DeleteExpenseButton from "../items/DeleteExpenseButton";
 import UpdateExpenseModal from "./UpdateExpenseModal";

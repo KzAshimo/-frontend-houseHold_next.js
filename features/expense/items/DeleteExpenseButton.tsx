@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/items/button/Button";
 import useExpenseDelete from "../hooks/useDeleteHook";
-import useExpenseIndex from "../hooks/useIndexHook";
+import useExpenseIndex from "../hooks/useIndexExpenseHook";
 
 type Props = {
   expenseId: number;

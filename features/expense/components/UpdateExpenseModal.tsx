@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import useExpenseUpdate from "../hooks/useUpdateHook";
-import useExpenseIndex from "../hooks/useIndexHook";
+import useExpenseIndex from "../hooks/useIndexExpenseHook";
 import { useFormContext } from "react-hook-form";
 import StoreForm from "@/components/items/form/StoreForm";
 import InputFormModal from "@/components/items/modal/InputModal";
