@@ -1,7 +1,7 @@
 "use client";
 
 import axiosInstance from "@/lib/axios";
-import { AxiosError } from "axios";
+import handleApiError from "@/lib/handleApiError";
 import { useState } from "react";
 
 type IncomePayload = {
@@ -12,11 +12,6 @@ type IncomePayload = {
   memo?: string;
 };
 
-type ErrorResponse = {
-  message: string;
-  errors?: { [key: string]: string[] };
-};
-
 const useStoreIncome = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -25,27 +20,15 @@ const useStoreIncome = () => {
     setIsLoading(true);
     setError(null);
     try {
-      await axiosInstance.post("api/v1/income/store", payload, {
-        withCredentials: true,
-      });
+      await axiosInstance.post("/api/v1/income/store", payload);
     } catch (err) {
-      if (err instanceof AxiosError && err.response) {
-        const responseData = err.response.data as ErrorResponse;
-        setError(responseData.message || "登録を失敗しました。");
-      } else if (err instanceof Error) {
-        setError(err.message);
-      } else {
-        setError("不明なエラーが発生しました");
-      }
+      setError(handleApiError(err));
     } finally {
       setIsLoading(false);
     }
   };
-  return {
-    storeIncome,
-    isLoading,
-    error,
-  };
+
+  return { storeIncome, isLoading, error };
 };
 
 export default useStoreIncome;

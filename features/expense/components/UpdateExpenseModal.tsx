@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import useExpenseUpdate from "../hooks/UseUpdateHook";
+import useExpenseUpdate from "../hooks/useUpdateHook";
 import useExpenseIndex from "../hooks/useIndexHook";
 import { useFormContext } from "react-hook-form";
 import StoreForm from "@/components/items/form/StoreForm";

@@ -1,6 +1,6 @@
 "use client";
 
-import axiosInstance from "@/lib/axios";
+import fetcher from "@/lib/fetcher";
 import useSWR from "swr";
 
 type Income = {
@@ -14,16 +14,8 @@ type Income = {
   updated_at: string;
 };
 
-type ApiResponse<T> = { data: T };
-type ErrorResponse = { message: string };
-
-const fetcher = (url: string) =>
-  axiosInstance
-    .get<ApiResponse<Income[]>>(url, { withCredentials: true })
-    .then((res) => res.data.data);
-
 const useIndexIncome = () => {
-  const { data, error, isLoading, mutate } = useSWR<Income[], ErrorResponse>(
+  const { data, error, isLoading, mutate } = useSWR<Income[]>(
     "/api/v1/income/index",
     fetcher,
     { revalidateOnFocus: false }
