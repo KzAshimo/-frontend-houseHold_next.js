@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/items/button/Button";
-import useExpenseDelete from "../hooks/UseDeleteHook";
+import useExpenseDelete from "../hooks/useDeleteHook";
 import useExpenseIndex from "../hooks/useIndexHook";
 
 type Props = {
