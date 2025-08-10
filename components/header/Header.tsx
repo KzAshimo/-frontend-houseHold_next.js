@@ -3,14 +3,27 @@
 import { Button } from "@/components/items/button/button";
 import useLogout from "@/features/auth/hooks/useLogoutHook";
 import useUser from "@/features/auth/hooks/useUserHook";
-import StoreExpenseButton from "@/features/expense/items/storeExopenseButton";
+import { useState } from "react";
+import StoreExpenseButton from "@/features/expense/items/StoreExpenseButton";
+import ExpenseIncomeSwitch from "./ExpenseIncomeSwitch";
 
-const Header = () => {
+type HeaderProps = {
+  onToggleView?: (showExpense: boolean) => void;
+};
+
+const Header = ({ onToggleView }: HeaderProps) => {
   const { logout, isLoading: isLogoutLoading } = useLogout();
   const { user, isLoading: isUserLoading, error } = useUser();
 
+  const [showExpense, setShowExpense] = useState(true);
+
+  const handleSwitchChange = (checked: boolean) => {
+    setShowExpense(checked);
+    onToggleView?.(checked);
+  };
+
   return (
-    <header className="bg-slate-800/40 shadow px-6 py-4 flex items-center">
+    <header className="bg-slate-800/40 shadow px-6 py-4 flex items-center justify-between">
       {/* 左側：ユーザー情報 */}
       <div className="flex-1 text-slate-100 text-lg font-semibold">
         {isUserLoading ? (
@@ -26,19 +39,23 @@ const Header = () => {
         )}
       </div>
 
-      <StoreExpenseButton/>
+      {/* 中央：Expense / Income 切替スイッチ */}
+      <div className="mx-6">
+        <ExpenseIncomeSwitch onChange={handleSwitchChange} initialShowExpense={showExpense} />
+      </div>
+
+      {/* StoreExpenseButton */}
+      <StoreExpenseButton />
 
       {/* 右側：ログアウトボタン */}
-      <div>
-        <Button
-          type="button"
-          color="rose"
-          clickHandler={logout}
-          isDisabled={isLogoutLoading}
-        >
-          {isLogoutLoading ? "ログアウト処理中..." : "ログアウト"}
-        </Button>
-      </div>
+      <Button
+        type="button"
+        color="rose"
+        clickHandler={logout}
+        isDisabled={isLogoutLoading}
+      >
+        {isLogoutLoading ? "ログアウト処理中..." : "ログアウト"}
+      </Button>
     </header>
   );
 };
