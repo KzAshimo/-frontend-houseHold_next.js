@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useSWRConfig } from "swr";
-import { ExpenseForm } from "../components/expenseForm";
+import { ExpenseForm } from "./expenseStoreForm";
 import InputFormModal from "@/components/items/modal/inputModal";
 import { Button } from "@/components/items/button/button";
 

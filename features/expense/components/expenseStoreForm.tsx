@@ -1,7 +1,10 @@
+"use client";
+
 import { useFormContext } from "react-hook-form";
 import useExpenseStore from "../hooks/useStoreExpenseHook";
 import StoreForm from "@/components/items/form/storeForm";
 import useCategoryIndex from "@/features/category/hooks/useIndexHook";
+import useUser from "@/features/auth/hooks/useUserHook";
 
 type ExpenseFormData = {
   category_id: number;
@@ -15,10 +18,11 @@ const ExpenseFormFields = () => {
     register,
     formState: { errors },
   } = useFormContext<ExpenseFormData>();
-
   const { categories, isLoading, error: categoryError } = useCategoryIndex();
+
   return (
     <div className="space-y-4">
+      {/* カテゴリ */}
       <div>
         <label
           htmlFor="categoryId"
@@ -36,9 +40,13 @@ const ExpenseFormFields = () => {
           {categoryError && <option>カテゴリーの取得に失敗しました</option>}
           {!isLoading && !categoryError && (
             <>
-              <option value="" className="bg-slate-500">選択してください</option>
+              <option value="">選択してください</option>
               {categories.map((category) => (
-                <option className="bg-slate-500" key={category.id} value={category.id}>
+                <option
+                  className="bg-slate-600"
+                  key={category.id}
+                  value={category.id}
+                >
                   {category.name}
                 </option>
               ))}
@@ -55,6 +63,7 @@ const ExpenseFormFields = () => {
         )}
       </div>
 
+      {/* 金額 */}
       <div>
         <label
           htmlFor="amount"
@@ -76,6 +85,7 @@ const ExpenseFormFields = () => {
         )}
       </div>
 
+      {/* 内容 */}
       <div>
         <label
           htmlFor="content"
@@ -96,6 +106,7 @@ const ExpenseFormFields = () => {
         )}
       </div>
 
+      {/* メモ */}
       <div>
         <label
           htmlFor="memo"
@@ -119,9 +130,15 @@ const ExpenseFormFields = () => {
 
 export const ExpenseForm = ({ onSuccess }: { onSuccess: () => void }) => {
   const { storeExpense, isLoading, error } = useExpenseStore();
+  const { user, isLoading: isUserLoading } = useUser();
 
   const handleStore = async (data: ExpenseFormData) => {
-    const userId = 1;
+    if (!user) {
+      console.error("ユーザー情報が取得できませんでした");
+      return;
+    }
+
+    const userId = user.id;
     await storeExpense({ ...data, userId });
 
     if (!error) {
@@ -132,8 +149,9 @@ export const ExpenseForm = ({ onSuccess }: { onSuccess: () => void }) => {
   return (
     <StoreForm<ExpenseFormData>
       onSubmit={handleStore}
-      isLoading={isLoading}
+      isLoading={isLoading || isUserLoading}
       error={error}
+      submitText="支出登録"
     >
       <ExpenseFormFields />
     </StoreForm>
