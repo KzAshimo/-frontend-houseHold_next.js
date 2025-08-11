@@ -7,6 +7,18 @@ import { useFormContext } from "react-hook-form";
 import StoreForm from "@/components/items/form/storeForm";
 import InputFormModal from "@/components/items/modal/inputModal";
 import { Button } from "@/components/items/button/button";
+import { KeyedMutator } from "swr";
+
+type Expense = {
+  id: number;
+  user: string;
+  category: string;
+  content: string;
+  amount: number;
+  memo: string;
+  created_at: string;
+  updated_at: string;
+};
 
 type Props = {
   expenseId: number;
@@ -15,6 +27,7 @@ type Props = {
     content: string;
     memo?: string;
   };
+  onUpdated: KeyedMutator<Expense[]>;
 };
 
 export default function UpdateExpenseModal({
@@ -35,11 +48,7 @@ export default function UpdateExpenseModal({
 
   return (
     <>
-      <Button
-      type="button"
-        clickHandler={() => setIsOpen(true)}
-        color="lime"
-      >
+      <Button type="button" clickHandler={() => setIsOpen(true)} color="lime">
         編集
       </Button>
 
