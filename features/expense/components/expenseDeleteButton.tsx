@@ -2,30 +2,39 @@
 
 import { Button } from "@/components/items/button/button";
 import useExpenseDelete from "../hooks/useDeleteExpenseHook";
-import useExpenseIndex from "../hooks/useIndexExpenseHook";
+import { KeyedMutator } from "swr";
+
+type Expense = {
+  id: number;
+  user: string;
+  category: string;
+  content: string;
+  amount: number;
+  memo: string;
+  created_at: string;
+  updated_at: string;
+};
 
 type Props = {
   expenseId: number;
-  onDeleted?: (id: number) => void;
+  onDeleted?: KeyedMutator<Expense[]>;
 };
 
 export default function DeleteExpenseButton({ expenseId, onDeleted }: Props) {
   const { deleteExpense, isLoading, error } = useExpenseDelete();
-  const { refetch } = useExpenseIndex();
 
   const handleClick = async () => {
     if (!confirm("本当に削除しますか？")) return;
 
-    await deleteExpense(expenseId);
-
-    if (!error) {
-      await refetch();
+    try {
+      await deleteExpense(expenseId);
       if (onDeleted) {
-        onDeleted(expenseId);
+        await onDeleted();
       }
+    } catch (e) {
+      console.error(e);
     }
   };
-
   return (
     <>
       <Button

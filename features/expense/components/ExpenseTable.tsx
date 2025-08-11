@@ -3,7 +3,7 @@
 import { useState } from "react";
 import useExpenseIndex from "@/features/expense/hooks/useIndexExpenseHook";
 import Modal from "@/components/items/modal/categoryModal";
-import DeleteExpenseButton from "../items/deleteExpenseButton";
+import DeleteExpenseButton from "./expenseDeleteButton";
 import UpdateExpenseModal from "./updateExpenseModal";
 
 const ExpenseTable = () => {
