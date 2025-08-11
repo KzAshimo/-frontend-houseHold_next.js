@@ -1,0 +1,153 @@
+"use client";
+
+import { useState, useMemo } from "react";
+import useIncomeIndex from "@/features/income/hooks/useIndexIncomeHook";
+import Modal from "@/components/items/modal/categoryModal";
+import UpdateIncomeModal from "./incomeUpdateModal";
+import DeleteIncomeButton from "./incomeDeleteButton";
+
+const IncomeTable = () => {
+  const { incomes: initialIncome, isLoading, error, refetch } = useIncomeIndex();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedMonth, setSelectedMonth] = useState<string | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+
+  // 月リスト
+  const months = useMemo(
+    () =>
+      Array.from(
+        new Set(
+          initialIncome.map((i) =>
+            new Date(i.created_at).toLocaleString("ja-JP", {
+              year: "numeric",
+              month: "short",
+            })
+          )
+        )
+      ),
+    [initialIncome]
+  );
+
+  // カテゴリリスト
+  const categories = useMemo(
+    () => Array.from(new Set(initialIncome.map((i) => i.category))),
+    [initialIncome]
+  );
+
+  // 集計
+  const getAmount = (month: string, category: string) =>
+    initialIncome
+      .filter(
+        (i) =>
+          new Date(i.created_at).toLocaleString("ja-JP", {
+            year: "numeric",
+            month: "short",
+          }) === month && i.category === category
+      )
+      .reduce((sum, i) => sum + i.amount, 0);
+
+  // 詳細取得
+  const getDetails = (month: string, category: string) =>
+    initialIncome.filter(
+      (i) =>
+        new Date(i.created_at).toLocaleString("ja-JP", {
+          year: "numeric",
+          month: "short",
+        }) === month && i.category === category
+    );
+
+  // カードクリック
+  const handleCardClick = (month: string, category: string) => {
+    setSelectedMonth(month);
+    setSelectedCategory(category);
+    setIsModalOpen(true);
+  };
+
+  if (isLoading) return <div>読み込み中...</div>;
+  if (error) return <div className="text-red-500">データ取得失敗: {error}</div>;
+
+  return (
+    <div className="m-5 space-y-6">
+      {months.map((month) => (
+        <div key={month}>
+          <h2 className="text-lg font-bold mb-3">{month}</h2>
+          <div className="flex gap-4 overflow-x-auto pb-2">
+            {categories.map((cat) => (
+              <div
+                key={cat}
+                className="flex-shrink-0 w-48 bg-emerald-500/20 shadow rounded-lg border p-4 cursor-pointer hover:shadow-lg transition"
+                onClick={() => handleCardClick(month, cat)}
+              >
+                <div className="text-2xl font-bold text-white">{cat}</div>
+                <div className="text-xl font-bold text-white mt-1">
+                  {getAmount(month, cat).toLocaleString()} 円
+                </div>
+                <div className="text-xs text-gray-300 mt-3">
+                  クリックして詳細
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+
+      {/* 詳細モーダル */}
+      <Modal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        title={`${selectedMonth} の ${selectedCategory} 詳細`}
+      >
+        {selectedMonth && selectedCategory && (
+          <div className="overflow-x-auto">
+            <table className="min-w-[700px] w-full text-sm text-left border-collapse">
+              <thead className="bg-gray-500 border-b">
+                <tr>
+                  <th className="px-1 py-2">日付</th>
+                  <th className="px-1 py-2">入力者</th>
+                  <th className="px-1 py-2">内容</th>
+                  <th className="px-1 py-2">メモ</th>
+                  <th className="px-1 py-2 text-right font-bold text-green-100">
+                    金額
+                  </th>
+                  <th className="px-1 py-2 text-center">操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                {getDetails(selectedMonth, selectedCategory).map((i) => (
+                  <tr key={i.id} className="border-b">
+                    <td className="px-4 py-2">
+                      {new Date(i.created_at).toLocaleDateString()}
+                    </td>
+                    <td className="px-1 py-2">{i.user}</td>
+                    <td className="px-1 py-2">{i.content}</td>
+                    <td className="px-1 py-2">{i.memo || "（メモなし）"}</td>
+                    <td className="px-1 py-2 text-right font-bold text-green-100">
+                      {i.amount.toLocaleString()} 円
+                    </td>
+                    <td className="px-1 py-2 flex gap-2 justify-center">
+                      <UpdateIncomeModal
+                        incomeId={i.id}
+                        defaultValues={{
+                          amount: i.amount,
+                          content: i.content,
+                          memo: i.memo,
+                        }}
+                        onUpdated={refetch}
+                      />
+                      <DeleteIncomeButton
+                        incomeId={i.id}
+                        onDeleted={refetch}
+                      />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </Modal>
+    </div>
+  );
+};
+
+export default IncomeTable;
