@@ -4,7 +4,7 @@ import { Button } from "@/components/items/button/button";
 import useLogout from "@/features/auth/hooks/useLogoutHook";
 import useUser from "@/features/auth/hooks/useUserHook";
 import { useState } from "react";
-import StoreExpenseButton from "@/features/expense/items/StoreExpenseButton";
+import StoreExpenseButton from "@/features/expense/components/expenseStoreButton";
 import ExpenseIncomeSwitch from "./expenseIncomeSwitch";
 import StoreIncomeButton from "@/features/income/components/incomeStoreButton";
 

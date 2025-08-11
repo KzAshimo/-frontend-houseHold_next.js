@@ -22,7 +22,7 @@ const IncomeFormFields = () => {
 
   return (
     <div className="space-y-4">
-      {/* カテゴリー */}
+      {/* カテゴリ */}
       <div>
         <label
           htmlFor="categoryId"
@@ -42,7 +42,11 @@ const IncomeFormFields = () => {
             <>
               <option value="">選択してください</option>
               {categories.map((category) => (
-                <option className="bg-slate-600" key={category.id} value={category.id}>
+                <option
+                  className="bg-slate-600"
+                  key={category.id}
+                  value={category.id}
+                >
                   {category.name}
                 </option>
               ))}
@@ -118,7 +122,7 @@ const IncomeFormFields = () => {
 
 export const IncomeForm = ({ onSuccess }: { onSuccess: () => void }) => {
   const { storeIncome, isLoading, error } = useStoreIncome();
-  const { user, isLoading: isUserLoading } = useUser(); // ← ユーザー情報取得
+  const { user, isLoading: isUserLoading } = useUser();
 
   const handleStore = async (data: IncomeFormData) => {
     if (!user) {
@@ -126,7 +130,7 @@ export const IncomeForm = ({ onSuccess }: { onSuccess: () => void }) => {
       return;
     }
 
-    const userId = user.id; // 認証ユーザーIDを取得
+    const userId = user.id;
     await storeIncome({ ...data, userId });
 
     if (!error) {
