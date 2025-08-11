@@ -5,7 +5,8 @@ import useLogout from "@/features/auth/hooks/useLogoutHook";
 import useUser from "@/features/auth/hooks/useUserHook";
 import { useState } from "react";
 import StoreExpenseButton from "@/features/expense/items/StoreExpenseButton";
-import ExpenseIncomeSwitch from "./ExpenseIncomeSwitch";
+import ExpenseIncomeSwitch from "./expenseIncomeSwitch";
+import StoreIncomeButton from "@/features/income/components/incomeStoreButton";
 
 type HeaderProps = {
   onToggleView?: (showExpense: boolean) => void;
@@ -41,11 +42,18 @@ const Header = ({ onToggleView }: HeaderProps) => {
 
       {/* 中央：Expense / Income 切替スイッチ */}
       <div className="mx-6">
-        <ExpenseIncomeSwitch onChange={handleSwitchChange} initialShowExpense={showExpense} />
+        <ExpenseIncomeSwitch
+          onChange={handleSwitchChange}
+          initialShowExpense={showExpense}
+        />
       </div>
 
-      {/* StoreExpenseButton */}
-      <StoreExpenseButton />
+      {/* スイッチに応じて追加ボタンを切替 */}
+      {showExpense ? (
+        <StoreExpenseButton />
+      ) : (
+        <StoreIncomeButton />
+      )}
 
       {/* 右側：ログアウトボタン */}
       <Button

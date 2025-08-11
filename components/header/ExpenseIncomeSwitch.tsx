@@ -34,8 +34,8 @@ const ExpenseIncomeSwitch = ({
           } inline-block h-4 w-4 transform rounded-full bg-white transition-transform`}
         />
       </Switch>
-      <span className="text-sm font-medium text-gray-700 select-none">
-        {showExpense ? "Expense" : "Income"}
+      <span className="text-xl font-medium text-slate-100 select-none">
+        {showExpense ? "支出" : "収入"}
       </span>
     </div>
   );

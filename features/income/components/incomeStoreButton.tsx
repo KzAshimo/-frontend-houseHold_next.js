@@ -2,11 +2,11 @@
 
 import { useState } from "react";
 import { useSWRConfig } from "swr";
-import { ExpenseForm } from "../components/expenseForm";
 import InputFormModal from "@/components/items/modal/inputModal";
 import { Button } from "@/components/items/button/button";
+import { IncomeForm } from "./incomeStoreForm";
 
-const StoreExpenseButton = () => {
+const StoreIncomeButton = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { mutate } = useSWRConfig();
 
@@ -15,26 +15,26 @@ const StoreExpenseButton = () => {
 
   const handleSuccess = () => {
     closeModal();
-    mutate("/api/v1/expense/index");
+    mutate("/api/v1/income/index");
   };
 
   return (
     <>
       <div className="flex justify-end m-3">
-        <Button type="button" color="violet" clickHandler={openModal}>
-          支出登録
+        <Button type="button" color="lime" clickHandler={openModal}>
+          収入登録
         </Button>
-      </div>
 
-      <InputFormModal
-        isOpen={isModalOpen}
-        onClose={closeModal}
-        title="支出登録"
-      >
-        <ExpenseForm onSuccess={handleSuccess} />
-      </InputFormModal>
+        <InputFormModal
+          isOpen={isModalOpen}
+          onClose={closeModal}
+          title="収入登録"
+        >
+          <IncomeForm onSuccess={handleSuccess} />
+        </InputFormModal>
+      </div>
     </>
   );
 };
 
-export default StoreExpenseButton;
+export default StoreIncomeButton;
