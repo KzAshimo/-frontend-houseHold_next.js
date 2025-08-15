@@ -14,7 +14,6 @@ const useIndexCategoryExpense = () => {
     fetcher,
     { revalidateOnFocus: false }
   );
-  console.log(data);
 
   return {
     categories: data ?? [],

@@ -3,8 +3,8 @@
 import { useFormContext } from "react-hook-form";
 import useStoreIncome from "../hooks/useStoreIncomeHook";
 import StoreForm from "@/components/items/form/storeForm";
-import useCategoryIndex from "@/features/category/hooks/useIndexHook";
 import useUser from "@/features/auth/hooks/useUserHook";
+import useIndexCategoryIncome from "../hooks/useIndexCategoryIncomeHook";
 
 type IncomeFormData = {
   category_id: number;
@@ -18,7 +18,7 @@ const IncomeFormFields = () => {
     register,
     formState: { errors },
   } = useFormContext<IncomeFormData>();
-  const { categories, isLoading, error: categoryError } = useCategoryIndex();
+  const { categories, isLoading, error: categoryError } = useIndexCategoryIncome();
 
   return (
     <div className="space-y-4">
