@@ -3,8 +3,8 @@
 import { useFormContext } from "react-hook-form";
 import useExpenseStore from "../hooks/useStoreExpenseHook";
 import StoreForm from "@/components/items/form/storeForm";
-import useCategoryIndex from "@/features/category/hooks/useIndexHook";
 import useUser from "@/features/auth/hooks/useUserHook";
+import useIndexCategoryExpense from "../hooks/useIndexCategoryExpenseHook";
 
 type ExpenseFormData = {
   category_id: number;
@@ -18,7 +18,7 @@ const ExpenseFormFields = () => {
     register,
     formState: { errors },
   } = useFormContext<ExpenseFormData>();
-  const { categories, isLoading, error: categoryError } = useCategoryIndex();
+  const { categories, isLoading, error: categoryError } = useIndexCategoryExpense();
 
   return (
     <div className="space-y-4">

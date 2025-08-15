@@ -1,7 +1,6 @@
 "use client";
 
 import fetcher from "@/lib/fetcher";
-import { use } from "react";
 import useSWR from "swr";
 
 type IncomeCategory = {
