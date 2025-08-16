@@ -1,31 +1,39 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import useExpenseIndex from "@/features/expense/hooks/useIndexExpenseHook";
 import Modal from "@/components/items/modal/categoryModal";
 import DeleteExpenseButton from "./expenseDeleteButton";
 import UpdateExpenseModal from "./expenseUpdateModal";
 
 const ExpenseTable = () => {
-  const { expenses: initialExpense, isLoading, error } = useExpenseIndex();
-  const [expenses, setExpenses] = useState<typeof initialExpense>([]);
+  const { expenses: initialExpense, isLoading, error, refetch } = useExpenseIndex();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedMonth, setSelectedMonth] = useState<string | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
-  const months = Array.from(
+  // 月リスト
+const months = useMemo(() =>
+  Array.from(
     new Set(
-      initialExpense.map((e) =>
-        new Date(e.created_at).toLocaleString("ja-JP", {
+      initialExpense.map((i) =>
+        new Date(i.created_at).toLocaleString("ja-JP", {
           year: "numeric",
           month: "short",
         })
       )
     )
+  ),
+  [initialExpense]
+);
+
+  // カテゴリリスト
+  const categories = useMemo(
+    () => Array.from(new Set(initialExpense.map((i)=> i.category))),
+    [initialExpense]
   );
 
-  const categories = Array.from(new Set(initialExpense.map((e) => e.category)));
-
+  // 集計
   const getAmount = (month: string, category: string) => {
     return initialExpense
       .filter(
@@ -38,6 +46,7 @@ const ExpenseTable = () => {
       .reduce((sum, e) => sum + e.amount, 0);
   };
 
+  // 詳細取得
   const getDetails = (month: string, category: string) => {
     return initialExpense.filter(
       (e) =>
@@ -48,6 +57,7 @@ const ExpenseTable = () => {
     );
   };
 
+  // カードクリック
   const handleCardClick = (month: string, category: string) => {
     setSelectedMonth(month);
     setSelectedCategory(category);
@@ -121,17 +131,14 @@ const ExpenseTable = () => {
                           content: e.content,
                           memo: e.memo,
                         }}
+                        onUpdated={refetch}
                       />
                     </td>
 
                     <td className="px-1 py-2 text-center">
                       <DeleteExpenseButton
                         expenseId={e.id}
-                        onDeleted={(id) => {
-                          setExpenses((prev) =>
-                            prev.filter((exp) => exp.id !== id)
-                          );
-                        }}
+                        onDeleted={refetch}
                       />
                     </td>
                   </tr>
