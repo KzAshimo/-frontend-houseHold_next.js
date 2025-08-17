@@ -30,7 +30,7 @@ const CategoryFormFields = () => {
           type="text"
           id="name"
           {...register("name", { required: "カテゴリ名は必須です" })}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+          className="mt-1 block w-full rounded-md border-black shadow-sm"
         />
         {errors.name && (
           <p className="mt-1 text-sm text-red-600">{errors.name.message}</p>

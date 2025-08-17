@@ -19,7 +19,7 @@ const Modal = ({ isOpen, onClose, title, children }: ModalProps) => {
     <ReactModal
       isOpen={isOpen}
       onRequestClose={onClose}
-      className="bg-slate-500/80 rounded-lg shadow-lg max-w-5xl mx-auto my-10 p-4 outline-none"
+      className="bg-slate-500/80 rounded-lg shadow-lg w-full  mx-auto my-10 p-4 outline-none"
       overlayClassName="fixed inset-0 bg-black/50 flex justify-center items-start z-50"
     >
       {/* ヘッダー */}
