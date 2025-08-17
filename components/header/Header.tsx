@@ -7,6 +7,7 @@ import { useState } from "react";
 import StoreExpenseButton from "@/features/expense/components/expenseStoreButton";
 import ExpenseIncomeSwitch from "./expenseIncomeSwitch";
 import StoreIncomeButton from "@/features/income/components/incomeStoreButton";
+import StoreCategoryButton from "@/features/category/components/categoryStoreButton";
 
 type HeaderProps = {
   onToggleView?: (showExpense: boolean) => void;
@@ -39,6 +40,8 @@ const Header = ({ onToggleView }: HeaderProps) => {
           <span className="text-gray-500">ゲスト</span>
         )}
       </div>
+
+      <StoreCategoryButton/>
 
       {/* 中央：Expense / Income 切替スイッチ */}
       <div className="mx-6">

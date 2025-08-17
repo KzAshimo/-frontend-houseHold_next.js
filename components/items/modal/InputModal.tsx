@@ -1,7 +1,7 @@
 "use client";
 
 import { Dialog } from "@headlessui/react";
-import { ReactNode, Fragment } from "react";
+import { ReactNode } from "react";
 
 type Props = {
   isOpen: boolean;
@@ -19,7 +19,7 @@ const InputFormModal = ({ isOpen, onClose, title, children }: Props) => {
       {/* 2. モーダル本体のコンテナ */}
       <div className="fixed inset-0 flex w-screen items-center justify-center p-4 text-slate-100">
         {/* 3. モーダルのパネル */}
-        <Dialog.Panel className="w-full max-w-md rounded-lg bg-slate-500/20 p-6 shadow-xl text-slate-100">
+        <Dialog.Panel className="w-full max-w-md rounded-lg bg-slate-500/80 p-6 shadow-xl text-slate-100">
           <Dialog.Title className="text-xl font-bold text-slate-100">
             {title}
           </Dialog.Title>

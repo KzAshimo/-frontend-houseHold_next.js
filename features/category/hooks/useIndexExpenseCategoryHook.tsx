@@ -3,14 +3,14 @@
 import fetcher from "@/lib/fetcher";
 import useSWR from "swr";
 
-type ExpenseCategory = {
+export type ExpenseCategory = {
   id: number;
   name: string;
 };
 
-const useIndexCategoryExpense = () => {
+const useIndexExpenseCategory = () => {
   const { data, error, isLoading, mutate } = useSWR<ExpenseCategory[]>(
-    "/api/v1/expense/index_category",
+    "/api/v1/category/index_expense",
     fetcher,
     { revalidateOnFocus: false }
   );
@@ -23,4 +23,4 @@ const useIndexCategoryExpense = () => {
   };
 };
 
-export default useIndexCategoryExpense;
+export default useIndexExpenseCategory;

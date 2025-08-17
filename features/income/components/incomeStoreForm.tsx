@@ -4,7 +4,7 @@ import { useFormContext } from "react-hook-form";
 import useStoreIncome from "../hooks/useStoreIncomeHook";
 import StoreForm from "@/components/items/form/storeForm";
 import useUser from "@/features/auth/hooks/useUserHook";
-import useIndexCategoryIncome from "../hooks/useIndexCategoryIncomeHook";
+import useIndexIncomeCategory, { IncomeCategory } from "@/features/category/hooks/useIndexIncomeCategoryHook";
 
 type IncomeFormData = {
   category_id: number;
@@ -18,7 +18,7 @@ const IncomeFormFields = () => {
     register,
     formState: { errors },
   } = useFormContext<IncomeFormData>();
-  const { categories, isLoading, error: categoryError } = useIndexCategoryIncome();
+  const { categories, isLoading, error: categoryError } = useIndexIncomeCategory();
 
   return (
     <div className="space-y-4">
@@ -41,7 +41,7 @@ const IncomeFormFields = () => {
           {!isLoading && !categoryError && (
             <>
               <option value="">選択してください</option>
-              {categories.map((category) => (
+              {categories.map((category: IncomeCategory) => (
                 <option
                   className="bg-slate-600"
                   key={category.id}

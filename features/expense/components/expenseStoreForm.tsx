@@ -4,7 +4,7 @@ import { useFormContext } from "react-hook-form";
 import useExpenseStore from "../hooks/useStoreExpenseHook";
 import StoreForm from "@/components/items/form/storeForm";
 import useUser from "@/features/auth/hooks/useUserHook";
-import useIndexCategoryExpense from "../hooks/useIndexCategoryExpenseHook";
+import useIndexExpenseCategory, { ExpenseCategory } from "@/features/category/hooks/useIndexExpenseCategoryHook";
 
 type ExpenseFormData = {
   category_id: number;
@@ -18,7 +18,7 @@ const ExpenseFormFields = () => {
     register,
     formState: { errors },
   } = useFormContext<ExpenseFormData>();
-  const { categories, isLoading, error: categoryError } = useIndexCategoryExpense();
+  const { categories, isLoading, error: categoryError } = useIndexExpenseCategory();
 
   return (
     <div className="space-y-4">
@@ -41,7 +41,7 @@ const ExpenseFormFields = () => {
           {!isLoading && !categoryError && (
             <>
               <option value="">選択してください</option>
-              {categories.map((category) => (
+              {categories.map((category: ExpenseCategory) => (
                 <option
                   className="bg-slate-600"
                   key={category.id}

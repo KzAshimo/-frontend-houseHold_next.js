@@ -3,14 +3,14 @@
 import fetcher from "@/lib/fetcher";
 import useSWR from "swr";
 
-type IncomeCategory = {
+export type IncomeCategory = {
   id: number;
   name: string;
 };
 
-const useIndexCategoryIncome = () => {
+const useIndexIncomeCategory = () => {
   const { data, error, isLoading, mutate } = useSWR<IncomeCategory[]>(
-    "/api/v1/income/index_category",
+    "/api/v1/category/index_income",
     fetcher,
     { revalidateOnFocus: false }
   );
@@ -23,4 +23,4 @@ const useIndexCategoryIncome = () => {
   };
 };
 
-export default useIndexCategoryIncome;
+export default useIndexIncomeCategory;
