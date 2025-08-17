@@ -4,7 +4,7 @@ import { FC } from "react";
 type Props = {
   children: React.ReactNode;
   type?: "button" | "submit";
-  color?: "lime" | "danger" | "rose" | "violet";
+  color?: "lime" | "amber" | "rose" | "violet";
   clickHandler?: () => void;
   size?: "sm" | "md" | "lg";
   isDisabled?: boolean;
@@ -22,7 +22,7 @@ export const Button: FC<Props> = ({
     "rounded",
     "hover:opacity-80",
     color === "lime" && "bg-lime-600",
-    color === "danger" && "bg-danger-500",
+    color === "amber" && "bg-amber-500",
     color === "rose" && "bg-rose-500",
     color === "violet" && "bg-violet-500",
     "text-white",

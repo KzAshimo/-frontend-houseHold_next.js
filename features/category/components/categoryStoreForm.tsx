@@ -50,9 +50,9 @@ const CategoryFormFields = () => {
           {...register("type", { required: "種類は必須です" })}
           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
         >
-          <option value="">選択してください</option>
-          <option value="income">収入</option>
-          <option value="expense">支出</option>
+          <option value="" className="bg-slate-600">選択してください</option>
+          <option value="income" className="bg-slate-600">収入</option>
+          <option value="expense" className="bg-slate-600">支出</option>
         </select>
         {errors.type && (
           <p className="mt-1 text-sm text-red-600">{errors.type.message}</p>
