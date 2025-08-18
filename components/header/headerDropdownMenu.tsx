@@ -1,21 +1,26 @@
 import useLogout from "@/features/auth/hooks/useLogoutHook";
+import ExpenseStoreModal from "@/features/expense/components/expenseStoreModal";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import {
-  ArchiveBoxXMarkIcon,
+  Bars3Icon,
   ChevronDownIcon,
   PencilIcon,
-  Square2StackIcon,
+  PlusCircleIcon,
   TrashIcon,
   UserCircleIcon,
 } from "@heroicons/react/16/solid";
+import { useState } from "react";
 
 const HeaderDropdownMenu = () => {
-  const {logout, isLoading} = useLogout();
+  const { logout, isLoading } = useLogout();
+  const [isExpenseModalOpen, setIsExpenseModalOpen] = useState(false);
+
   return (
     <div className="w-52 text-right">
       <Menu __demoMode>
         <MenuButton className="inline-flex items-center gap-2 rounded-md bg-gray-800 px-3 py-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:not-data-focus:outline-none data-focus:outline data-focus:outline-white data-hover:bg-gray-700 data-open:bg-gray-700">
-          Options
+          <Bars3Icon className="size-5 fill-white/60" />
+          Menu
           <ChevronDownIcon className="size-4 fill-white/60" />
         </MenuButton>
 
@@ -27,31 +32,35 @@ const HeaderDropdownMenu = () => {
           <MenuItem>
             <button className="group flex w-full items-center gap-2 rounded-lg px-3 py-1.5 data-focus:bg-white/10">
               <PencilIcon className="size-4 fill-white/30" />
-              Edit
+              カテゴリ
               <kbd className="ml-auto hidden font-sans text-xs text-white/50 group-data-focus:inline">
-                ⌘E
+                追加 / 編集
               </kbd>
             </button>
           </MenuItem>
-          <MenuItem>
+
+          <MenuItem
+            as="button"
+            onClick={() => setIsExpenseModalOpen(true)}
+            className="group flex w-full items-center gap-2 rounded-lg px-3 py-1.5 data-focus:bg-white/10"
+          >
+            <PlusCircleIcon className="size-4 fill-white/30" />
+            支出
+            <kbd className="ml-auto hidden font-sans text-xs text-white/50 group-data-focus:inline">
+              追加
+            </kbd>
+          </MenuItem>
+
+          <MenuItem as="button">
             <button className="group flex w-full items-center gap-2 rounded-lg px-3 py-1.5 data-focus:bg-white/10">
-              <Square2StackIcon className="size-4 fill-white/30" />
-              Duplicate
+              <PlusCircleIcon className="size-4 fill-white/30" />
+              収入
               <kbd className="ml-auto hidden font-sans text-xs text-white/50 group-data-focus:inline">
-                ⌘D
+                追加
               </kbd>
             </button>
           </MenuItem>
-          <div className="my-1 h-px bg-white/5" />
-          <MenuItem>
-            <button className="group flex w-full items-center gap-2 rounded-lg px-3 py-1.5 data-focus:bg-white/10">
-              <ArchiveBoxXMarkIcon className="size-4 fill-white/30" />
-              Archive
-              <kbd className="ml-auto hidden font-sans text-xs text-white/50 group-data-focus:inline">
-                ⌘A
-              </kbd>
-            </button>
-          </MenuItem>
+
           <MenuItem>
             <button className="group flex w-full items-center gap-2 rounded-lg px-3 py-1.5 data-focus:bg-white/10">
               <TrashIcon className="size-4 fill-white/30" />
@@ -64,16 +73,25 @@ const HeaderDropdownMenu = () => {
 
           <MenuItem>
             <button
-            className="group flex w-full items-center gap-2 rounded-lg px-3 py-1.5 data-focus:bg-white/10"
-            onClick={logout}
-            disabled={isLoading}
+              className="group flex w-full items-center gap-2 rounded-lg px-3 py-1.5 data-focus:bg-white/10"
+              onClick={logout}
+              disabled={isLoading}
             >
               <UserCircleIcon className="size-4 fill-white/30" />
-              Logout
+              ログアウト
             </button>
           </MenuItem>
         </MenuItems>
       </Menu>
+
+      {/* 支出モーダル */}
+      {isExpenseModalOpen && (
+        <ExpenseStoreModal
+          isOpen={isExpenseModalOpen}
+          setIsOpen={setIsExpenseModalOpen}
+          onSuccess={() => setIsExpenseModalOpen(false)}
+        />
+      )}
     </div>
   );
 };
