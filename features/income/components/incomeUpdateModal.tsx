@@ -4,10 +4,10 @@ import { useState } from "react";
 import useIncomeUpdate from "../hooks/useUpdateIncomeHook";
 import useIncomeIndex from "../hooks/useIndexIncomeHook";
 import { useFormContext } from "react-hook-form";
-import StoreForm from "@/components/items/form/storeForm";
-import InputFormModal from "@/components/items/modal/inputModal";
 import { KeyedMutator } from "swr";
 import { Button } from "@headlessui/react";
+import Modal from "@/components/items/modal";
+import Form from "@/components/items/form";
 
 type Income = {
   id: number;
@@ -52,12 +52,12 @@ export default function UpdateIncomeModal({ incomeId, defaultValues }: Props) {
         編集
       </Button>
 
-      <InputFormModal
+      <Modal
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
         title="収入の編集"
       >
-        <StoreForm
+        <Form
           onSubmit={handleSubmit}
           isLoading={isLoading}
           submitText="更新する"
@@ -66,8 +66,8 @@ export default function UpdateIncomeModal({ incomeId, defaultValues }: Props) {
           <AmountInput defaultValue={defaultValues.amount} />
           <ContentInput defaultValue={defaultValues.content} />
           <MemoInput defaultValue={defaultValues.memo} />
-        </StoreForm>
-      </InputFormModal>
+        </Form>
+      </Modal>
     </>
   );
 }
