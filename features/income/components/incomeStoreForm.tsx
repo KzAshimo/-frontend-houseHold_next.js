@@ -1,12 +1,11 @@
 "use client";
 
 import { useFormContext } from "react-hook-form";
-import useStoreIncome from "../hooks/useStoreIncomeHook";
-import StoreForm from "@/components/items/form/storeForm";
-import useUser from "@/features/auth/hooks/useUserHook";
-import useIndexIncomeCategory, { IncomeCategory } from "@/features/category/hooks/useIndexIncomeCategoryHook";
+import useIndexIncomeCategory, {
+  IncomeCategory,
+} from "@/features/category/hooks/useIndexIncomeCategoryHook";
 
-type IncomeFormData = {
+export type IncomeFormData = {
   category_id: number;
   amount: number;
   content: string;
@@ -18,7 +17,11 @@ const IncomeFormFields = () => {
     register,
     formState: { errors },
   } = useFormContext<IncomeFormData>();
-  const { categories, isLoading, error: categoryError } = useIndexIncomeCategory();
+  const {
+    categories,
+    isLoading,
+    error: categoryError,
+  } = useIndexIncomeCategory();
 
   return (
     <div className="space-y-4">
@@ -34,13 +37,15 @@ const IncomeFormFields = () => {
           id="categoryId"
           {...register("category_id", { required: "カテゴリーは必須です" })}
           disabled={isLoading || !!categoryError}
-          className="mt-1 block w-full rounded-md border-slate-100 shadow-sm "
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm disabled:bg-slate-100"
         >
           {isLoading && <option>読み込み中...</option>}
           {categoryError && <option>カテゴリーの取得に失敗しました</option>}
           {!isLoading && !categoryError && (
             <>
-              <option value="">選択してください</option>
+              <option value="" className="bg-slate-600">
+                選択してください
+              </option>
               {categories.map((category: IncomeCategory) => (
                 <option
                   className="bg-slate-600"
@@ -75,7 +80,7 @@ const IncomeFormFields = () => {
             required: "金額は必須です",
             valueAsNumber: true,
           })}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
         />
         {errors.amount && (
           <p className="mt-1 text-sm text-red-600">{errors.amount.message}</p>
@@ -113,39 +118,11 @@ const IncomeFormFields = () => {
           id="memo"
           {...register("memo")}
           rows={3}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
         />
       </div>
     </div>
   );
 };
 
-export const IncomeForm = ({ onSuccess }: { onSuccess: () => void }) => {
-  const { storeIncome, isLoading, error } = useStoreIncome();
-  const { user, isLoading: isUserLoading } = useUser();
-
-  const handleStore = async (data: IncomeFormData) => {
-    if (!user) {
-      console.error("ユーザー情報が取得できませんでした");
-      return;
-    }
-
-    const userId = user.id;
-    await storeIncome({ ...data, userId });
-
-    if (!error) {
-      onSuccess();
-    }
-  };
-
-  return (
-    <StoreForm<IncomeFormData>
-      onSubmit={handleStore}
-      isLoading={isLoading || isUserLoading}
-      error={error}
-      submitText="収入登録"
-    >
-      <IncomeFormFields />
-    </StoreForm>
-  );
-};
+export default IncomeFormFields;

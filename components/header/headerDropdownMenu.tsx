@@ -1,5 +1,6 @@
 import useLogout from "@/features/auth/hooks/useLogoutHook";
 import ExpenseStoreModal from "@/features/expense/components/expenseStoreModal";
+import IncomeStoreModal from "@/features/income/components/incomeStoreModal";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import {
   Bars3Icon,
@@ -14,6 +15,7 @@ import { useState } from "react";
 const HeaderDropdownMenu = () => {
   const { logout, isLoading } = useLogout();
   const [isExpenseModalOpen, setIsExpenseModalOpen] = useState(false);
+  const [isIncomeModalOpen, setIsIncomeModalOpen] = useState(false);
 
   return (
     <div className="w-52 text-right">
@@ -51,14 +53,16 @@ const HeaderDropdownMenu = () => {
             </kbd>
           </MenuItem>
 
-          <MenuItem>
-            <button className="group flex w-full items-center gap-2 rounded-lg px-3 py-1.5 data-focus:bg-white/10">
-              <PlusCircleIcon className="size-4 fill-white/30" />
-              収入
-              <kbd className="ml-auto hidden font-sans text-xs text-white/50 group-data-focus:inline">
-                追加
-              </kbd>
-            </button>
+          <MenuItem
+            as="button"
+            onClick={() => setIsIncomeModalOpen(true)}
+            className="group flex w-full items-center gap-2 rounded-lg px-3 py-1.5 data-focus:bg-white/10"
+          >
+            <PlusCircleIcon className="size-4 fill-white/30" />
+            収入
+            <kbd className="ml-auto hidden font-sans text-xs text-white/50 group-data-focus:inline">
+              追加
+            </kbd>
           </MenuItem>
 
           <MenuItem>
@@ -90,6 +94,15 @@ const HeaderDropdownMenu = () => {
           isOpen={isExpenseModalOpen}
           setIsOpen={setIsExpenseModalOpen}
           onSuccess={() => setIsExpenseModalOpen(false)}
+        />
+      )}
+
+      {/* 収入モーダル */}
+      {isIncomeModalOpen && (
+        <IncomeStoreModal
+          isOpen={isIncomeModalOpen}
+          setIsOpen={setIsIncomeModalOpen}
+          onSuccess={() => setIsIncomeModalOpen(false)}
         />
       )}
     </div>
