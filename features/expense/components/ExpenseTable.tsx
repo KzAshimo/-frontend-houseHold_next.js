@@ -2,34 +2,40 @@
 
 import { useMemo, useState } from "react";
 import useExpenseIndex from "@/features/expense/hooks/useIndexExpenseHook";
-import Modal from "@/components/items/modal/categoryModal";
 import DeleteExpenseButton from "./expenseDeleteButton";
 import UpdateExpenseModal from "./expenseUpdateModal";
+import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 
 const ExpenseTable = () => {
-  const { expenses: initialExpense, isLoading, error, refetch } = useExpenseIndex();
+  const {
+    expenses: initialExpense,
+    isLoading,
+    error,
+    refetch,
+  } = useExpenseIndex();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedMonth, setSelectedMonth] = useState<string | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
   // 月リスト
-const months = useMemo(() =>
-  Array.from(
-    new Set(
-      initialExpense.map((i) =>
-        new Date(i.created_at).toLocaleString("ja-JP", {
-          year: "numeric",
-          month: "short",
-        })
-      )
-    )
-  ),
-  [initialExpense]
-);
+  const months = useMemo(
+    () =>
+      Array.from(
+        new Set(
+          initialExpense.map((i) =>
+            new Date(i.created_at).toLocaleString("ja-JP", {
+              year: "numeric",
+              month: "short",
+            })
+          )
+        )
+      ),
+    [initialExpense]
+  );
 
   // カテゴリリスト
   const categories = useMemo(
-    () => Array.from(new Set(initialExpense.map((i)=> i.category))),
+    () => Array.from(new Set(initialExpense.map((i) => i.category))),
     [initialExpense]
   );
 
@@ -91,63 +97,80 @@ const months = useMemo(() =>
           </div>
         </div>
       ))}
-      <Modal
-        isOpen={isModalOpen}
+      <Dialog
+        open={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        title={`${selectedMonth} の ${selectedCategory} 詳細`}
+        className="relative z-50 focus:outline-none"
       >
-        {selectedMonth && selectedCategory && (
-          <div className="overflow-x-auto">
-            <table className="min-w-[700px] w-full text-sm text-left border-collapse">
-              <thead className="bg-gray-500 border-b">
-                <tr>
-                  <th className="px-1 py-2">日付</th>
-                  <th className="px-1 py-2">入力者</th>
-                  <th className="px-1 py-2">内容</th>
-                  <th className="px-1 py-2">メモ</th>
-                  <th className="px-1 py-2 text-right font-bold text-red-100">
-                    金額
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {getDetails(selectedMonth, selectedCategory).map((e) => (
-                  <tr key={e.id} className="border-b">
-                    <td className="px-4 py-2">
-                      {new Date(e.created_at).toLocaleDateString()}
-                    </td>
-                    <td className="px-1 py-2">{e.user}</td>
-                    <td className="px-1 py-2">{e.content}</td>
-                    <td className="px-1 py-2">{e.memo || "（メモなし）"}</td>
-                    <td className="px-1 py-2 text-right font-bold text-red-100">
-                      {e.amount.toLocaleString()} 円
-                    </td>
+        <div className="fixed inset-0 bg-black/50" /> {/* 背景のオーバーレイ */}
+        <div className="fixed inset-0 flex items-center justify-center p-4">
+          <DialogPanel className="w-full max-w-4xl rounded-xl bg-white/5 p-6 backdrop-blur-2xl">
+            <DialogTitle className="text-lg font-bold text-white mb-4">
+              {`${selectedMonth} の ${selectedCategory} 詳細`}
+            </DialogTitle>
 
-                    <td className="px-1 py-2 text-center">
-                      <UpdateExpenseModal
-                        expenseId={e.id}
-                        defaultValues={{
-                          amount: e.amount,
-                          content: e.content,
-                          memo: e.memo,
-                        }}
-                        onUpdated={refetch}
-                      />
-                    </td>
+            {selectedMonth && selectedCategory && (
+              <div className="overflow-x-auto">
+                <table className="min-w-[700px] w-full text-sm text-left border-collapse">
+                  <thead className="bg-gray-500 border-b">
+                    <tr>
+                      <th className="px-1 py-2">日付</th>
+                      <th className="px-1 py-2">入力者</th>
+                      <th className="px-1 py-2">内容</th>
+                      <th className="px-1 py-2">メモ</th>
+                      <th className="px-1 py-2 text-right font-bold text-red-100">
+                        金額
+                      </th>
+                      <th className="px-1 py-2 text-center">編集</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {getDetails(selectedMonth, selectedCategory).map((e) => (
+                      <tr key={e.id} className="border-b">
+                        <td className="px-4 py-2">
+                          {new Date(e.created_at).toLocaleDateString()}
+                        </td>
+                        <td className="px-1 py-2">{e.user}</td>
+                        <td className="px-1 py-2">{e.content}</td>
+                        <td className="px-1 py-2">
+                          {e.memo || "（メモなし）"}
+                        </td>
+                        <td className="px-1 py-2 text-right font-bold text-red-100">
+                          {e.amount.toLocaleString()} 円
+                        </td>
+                        <td className="px-1 py-2 flex gap-2 justify-center">
+                          <UpdateExpenseModal
+                            expenseId={e.id}
+                            defaultValues={{
+                              amount: e.amount,
+                              content: e.content,
+                              memo: e.memo,
+                            }}
+                            onUpdated={refetch}
+                          />
+                          <DeleteExpenseButton
+                            expenseId={e.id}
+                            onDeleted={refetch}
+                          />
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
 
-                    <td className="px-1 py-2 text-center">
-                      <DeleteExpenseButton
-                        expenseId={e.id}
-                        onDeleted={refetch}
-                      />
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
-      </Modal>
+            <div className="mt-4 text-right">
+              <button
+                className="rounded-md bg-gray-700 px-4 py-2 text-white hover:bg-gray-600"
+                onClick={() => setIsModalOpen(false)}
+              >
+                閉じる
+              </button>
+            </div>
+          </DialogPanel>
+        </div>
+      </Dialog>
     </div>
   );
 };

@@ -1,13 +1,16 @@
-"use client";
-
 import { useState, useMemo } from "react";
 import useIncomeIndex from "@/features/income/hooks/useIndexIncomeHook";
-import Modal from "@/components/items/modal/categoryModal";
 import UpdateIncomeModal from "./incomeUpdateModal";
 import DeleteIncomeButton from "./incomeDeleteButton";
+import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 
 const IncomeTable = () => {
-  const { incomes: initialIncome, isLoading, error, refetch } = useIncomeIndex();
+  const {
+    incomes: initialIncome,
+    isLoading,
+    error,
+    refetch,
+  } = useIncomeIndex();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedMonth, setSelectedMonth] = useState<string | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
@@ -91,61 +94,81 @@ const IncomeTable = () => {
         </div>
       ))}
 
-      {/* 詳細モーダル */}
-      <Modal
-        isOpen={isModalOpen}
+      {/* Dialog モーダルに置き換え */}
+      <Dialog
+        open={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        title={`${selectedMonth} の ${selectedCategory} 詳細`}
+        className="relative z-50 focus:outline-none"
       >
-        {selectedMonth && selectedCategory && (
-          <div className="overflow-x-auto">
-            <table className="min-w-[700px] w-full text-sm text-left border-collapse">
-              <thead className="bg-gray-500 border-b">
-                <tr>
-                  <th className="px-1 py-2">日付</th>
-                  <th className="px-1 py-2">入力者</th>
-                  <th className="px-1 py-2">内容</th>
-                  <th className="px-1 py-2">メモ</th>
-                  <th className="px-1 py-2 text-right font-bold text-green-100">
-                    金額
-                  </th>
-                  <th className="px-1 py-2 text-center">操作</th>
-                </tr>
-              </thead>
-              <tbody>
-                {getDetails(selectedMonth, selectedCategory).map((i) => (
-                  <tr key={i.id} className="border-b">
-                    <td className="px-4 py-2">
-                      {new Date(i.created_at).toLocaleDateString()}
-                    </td>
-                    <td className="px-1 py-2">{i.user}</td>
-                    <td className="px-1 py-2">{i.content}</td>
-                    <td className="px-1 py-2">{i.memo || "（メモなし）"}</td>
-                    <td className="px-1 py-2 text-right font-bold text-green-100">
-                      {i.amount.toLocaleString()} 円
-                    </td>
-                    <td className="px-1 py-2 flex gap-2 justify-center">
-                      <UpdateIncomeModal
-                        incomeId={i.id}
-                        defaultValues={{
-                          amount: i.amount,
-                          content: i.content,
-                          memo: i.memo,
-                        }}
-                        onUpdated={refetch}
-                      />
-                      <DeleteIncomeButton
-                        incomeId={i.id}
-                        onDeleted={refetch}
-                      />
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
-      </Modal>
+        <div className="fixed inset-0 bg-black/50" />
+        <div className="fixed inset-0 flex items-center justify-center p-4">
+          <DialogPanel className="w-full max-w-4xl rounded-xl bg-white/5 p-6 backdrop-blur-2xl">
+            <DialogTitle className="text-lg font-bold text-white mb-4">
+              {`${selectedMonth} の ${selectedCategory} 詳細`}
+            </DialogTitle>
+
+            {selectedMonth && selectedCategory && (
+              <div className="overflow-x-auto">
+                <table className="min-w-[700px] w-full text-sm text-left border-collapse">
+                  <thead className="bg-gray-500 border-b">
+                    <tr>
+                      <th className="px-1 py-2">日付</th>
+                      <th className="px-1 py-2">入力者</th>
+                      <th className="px-1 py-2">内容</th>
+                      <th className="px-1 py-2">メモ</th>
+                      <th className="px-1 py-2 text-right font-bold text-green-100">
+                        金額
+                      </th>
+                      <th className="px-1 py-2 text-center">編集</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {getDetails(selectedMonth, selectedCategory).map((i) => (
+                      <tr key={i.id} className="border-b">
+                        <td className="px-4 py-2">
+                          {new Date(i.created_at).toLocaleDateString()}
+                        </td>
+                        <td className="px-1 py-2">{i.user}</td>
+                        <td className="px-1 py-2">{i.content}</td>
+                        <td className="px-1 py-2">
+                          {i.memo || "（メモなし）"}
+                        </td>
+                        <td className="px-1 py-2 text-right font-bold text-green-100">
+                          {i.amount.toLocaleString()} 円
+                        </td>
+                        <td className="px-1 py-2 flex gap-2 justify-center">
+                          <UpdateIncomeModal
+                            incomeId={i.id}
+                            defaultValues={{
+                              amount: i.amount,
+                              content: i.content,
+                              memo: i.memo,
+                            }}
+                            onUpdated={refetch}
+                          />
+                          <DeleteIncomeButton
+                            incomeId={i.id}
+                            onDeleted={refetch}
+                          />
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+
+            <div className="mt-4 text-right">
+              <button
+                className="rounded-md bg-gray-700 px-4 py-2 text-white hover:bg-gray-600"
+                onClick={() => setIsModalOpen(false)}
+              >
+                閉じる
+              </button>
+            </div>
+          </DialogPanel>
+        </div>
+      </Dialog>
     </div>
   );
 };

@@ -3,8 +3,8 @@
 import { useState } from "react";
 import { useSWRConfig } from "swr";
 import InputFormModal from "@/components/items/modal/inputModal";
-import { Button } from "@/components/items/button/button";
 import { CategoryForm } from "./categoryStoreForm";
+import { Button } from "@headlessui/react";
 
 const StoreCategoryButton = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -20,8 +20,11 @@ const StoreCategoryButton = () => {
 
   return (
     <>
-      <div className="flex justify-end m-3">
-        <Button type="button" color="amber" clickHandler={openModal}>
+      <div className="m-3">
+        <Button
+          className="inline-flex items-center gap-2 rounded-md bg-gray-700 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:not-data-focus:outline-none data-focus:outline data-focus:outline-white data-hover:bg-gray-600 data-open:bg-gray-700"
+          onClick={openModal}
+        >
           カテゴリ登録
         </Button>
 
