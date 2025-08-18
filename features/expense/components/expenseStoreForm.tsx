@@ -29,9 +29,9 @@ export default function ExpenseFormFields() {
           {categoryError && <option>カテゴリーの取得に失敗しました</option>}
           {!isLoading && !categoryError && (
             <>
-              <option value="">選択してください</option>
+              <option value="" className="bg-slate-600">選択してください</option>
               {categories.map((category: ExpenseCategory) => (
-                <option key={category.id} value={category.id}>{category.name}</option>
+                <option className="bg-slate-600" key={category.id} value={category.id}>{category.name}</option>
               ))}
             </>
           )}
