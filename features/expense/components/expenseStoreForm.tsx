@@ -1,24 +1,27 @@
 "use client";
 
 import { useFormContext } from "react-hook-form";
-import useExpenseStore from "../hooks/useStoreExpenseHook";
-import StoreForm from "@/components/items/form/storeForm";
-import useUser from "@/features/auth/hooks/useUserHook";
-import useIndexExpenseCategory, { ExpenseCategory } from "@/features/category/hooks/useIndexExpenseCategoryHook";
+import useIndexExpenseCategory, {
+  ExpenseCategory,
+} from "@/features/category/hooks/useIndexExpenseCategoryHook";
 
-type ExpenseFormData = {
+export type ExpenseFormData = {
   category_id: number;
   amount: number;
   content: string;
   memo?: string;
 };
 
-const ExpenseFormFields = () => {
+export default function ExpenseFormFields() {
   const {
     register,
     formState: { errors },
   } = useFormContext<ExpenseFormData>();
-  const { categories, isLoading, error: categoryError } = useIndexExpenseCategory();
+  const {
+    categories,
+    isLoading,
+    error: categoryError,
+  } = useIndexExpenseCategory();
 
   return (
     <div className="space-y-4">
@@ -40,7 +43,9 @@ const ExpenseFormFields = () => {
           {categoryError && <option>カテゴリーの取得に失敗しました</option>}
           {!isLoading && !categoryError && (
             <>
-              <option value="">選択してください</option>
+              <option value="" className="bg-slate-600">
+                選択してください
+              </option>
               {categories.map((category: ExpenseCategory) => (
                 <option
                   className="bg-slate-600"
@@ -57,9 +62,6 @@ const ExpenseFormFields = () => {
           <p className="mt-1 text-sm text-red-600">
             {errors.category_id.message}
           </p>
-        )}
-        {categoryError && (
-          <p className="mt-1 text-sm text-red-600">{categoryError}</p>
         )}
       </div>
 
@@ -96,9 +98,7 @@ const ExpenseFormFields = () => {
         <input
           type="text"
           id="content"
-          {...register("content", {
-            required: "内容は必須です",
-          })}
+          {...register("content", { required: "内容は必須です" })}
           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
         />
         {errors.content && (
@@ -120,40 +120,7 @@ const ExpenseFormFields = () => {
           rows={3}
           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
         />
-        {errors.memo && (
-          <p className="mt-1 text-sm text-red-600">{errors.memo.message}</p>
-        )}
       </div>
     </div>
   );
-};
-
-export const ExpenseForm = ({ onSuccess }: { onSuccess: () => void }) => {
-  const { storeExpense, isLoading, error } = useExpenseStore();
-  const { user, isLoading: isUserLoading } = useUser();
-
-  const handleStore = async (data: ExpenseFormData) => {
-    if (!user) {
-      console.error("ユーザー情報が取得できませんでした");
-      return;
-    }
-
-    const userId = user.id;
-    await storeExpense({ ...data, userId });
-
-    if (!error) {
-      onSuccess();
-    }
-  };
-
-  return (
-    <StoreForm<ExpenseFormData>
-      onSubmit={handleStore}
-      isLoading={isLoading || isUserLoading}
-      error={error}
-      submitText="支出登録"
-    >
-      <ExpenseFormFields />
-    </StoreForm>
-  );
-};
+}

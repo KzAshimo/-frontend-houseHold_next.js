@@ -1,7 +1,6 @@
 "use client";
 
 import { useFormContext } from "react-hook-form";
-import StoreForm from "@/components/items/form/storeForm";
 import useStoreCategory from "../hooks/useStoreCategoryHook";
 import useUser from "@/features/auth/hooks/useUserHook";
 
@@ -80,14 +79,8 @@ export const CategoryForm = ({ onSuccess }: { onSuccess: () => void }) => {
     }
   };
 
-  return (
-    <StoreForm<CategoryFormData>
-      onSubmit={handleStore}
-      isLoading={isLoading || isUserLoading}
-      error={error}
-      submitText="カテゴリ登録"
-    >
-      <CategoryFormFields />
-    </StoreForm>
-  );
+  return(
+    <>
+    </>
+  )
 };

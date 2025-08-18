@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/components/items/button/button";
+import { Button } from "@headlessui/react";
 import useExpenseDelete from "../hooks/useDeleteExpenseHook";
 import { KeyedMutator } from "swr";
 
@@ -38,10 +38,9 @@ export default function DeleteExpenseButton({ expenseId, onDeleted }: Props) {
   return (
     <>
       <Button
-        type="button"
-        clickHandler={handleClick}
-        isDisabled={isLoading}
-        color="rose"
+      className="inline-flex items-center gap-2 rounded-md bg-gray-700 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:not-data-focus:outline-none data-focus:outline data-focus:outline-white data-hover:bg-gray-600 data-open:bg-gray-700"
+        onClick={handleClick}
+        disabled={isLoading}
       >
         {isLoading ? "削除中..." : "削除"}
       </Button>
