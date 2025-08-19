@@ -94,7 +94,6 @@ const IncomeTable = () => {
         </div>
       ))}
 
-      {/* Dialog モーダルに置き換え */}
       <Dialog
         open={isModalOpen}
         onClose={() => setIsModalOpen(false)}

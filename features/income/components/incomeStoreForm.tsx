@@ -37,7 +37,7 @@ const IncomeFormFields = () => {
           id="categoryId"
           {...register("category_id", { required: "カテゴリーは必須です" })}
           disabled={isLoading || !!categoryError}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm disabled:bg-slate-100"
+          className="mt-1 block w-full rounded-md border-white border-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm disabled:bg-slate-100"
         >
           {isLoading && <option>読み込み中...</option>}
           {categoryError && <option>カテゴリーの取得に失敗しました</option>}
@@ -80,7 +80,7 @@ const IncomeFormFields = () => {
             required: "金額は必須です",
             valueAsNumber: true,
           })}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+          className="mt-1 block w-full rounded-md border-white border-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
         />
         {errors.amount && (
           <p className="mt-1 text-sm text-red-600">{errors.amount.message}</p>
@@ -99,7 +99,7 @@ const IncomeFormFields = () => {
           type="text"
           id="content"
           {...register("content", { required: "内容は必須です" })}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+          className="mt-1 block w-full rounded-md border-white border-2 shadow-sm"
         />
         {errors.content && (
           <p className="mt-1 text-sm text-red-600">{errors.content.message}</p>
@@ -118,7 +118,7 @@ const IncomeFormFields = () => {
           id="memo"
           {...register("memo")}
           rows={3}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+          className="mt-1 block w-full rounded-md border-white border-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
         />
       </div>
     </div>

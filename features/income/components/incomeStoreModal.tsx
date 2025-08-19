@@ -39,7 +39,7 @@ export default function IncomeStoreModal({
                 <Button type="button" className="rounded-md bg-gray-700 px-4 py-2 text-white hover:bg-gray-600" onClick={() => setIsOpen(false)}>
                   閉じる
                 </Button>
-                <Button type="submit" className="rounded-md bg-indigo-600 px-4 py-2 text-white hover:bg-indigo-500" disabled={isLoading}>
+                <Button type="submit" className="rounded-md bg-gray-700 px-4 py-2 text-white hover:bg-indigo-500" disabled={isLoading}>
                   登録
                 </Button>
               </div>
