@@ -40,7 +40,13 @@ export default function IndexCategoryModal({ isOpen, onClose }: Props) {
                       key={category.id}
                       className="border-b border-gray-200 py-1"
                     >
-                      {category.name} ({category.type})
+                      {category.name} (
+                      {category.type === "expense"
+                        ? "支出"
+                        : category.type === "income"
+                        ? "収入"
+                        : category.type}
+                      )
                     </li>
                   ))}
                 </ul>
