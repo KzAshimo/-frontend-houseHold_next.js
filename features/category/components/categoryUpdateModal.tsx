@@ -10,8 +10,11 @@ import { useForm, FormProvider, useFormContext } from "react-hook-form"; // Form
 
 type Category = {
   id: number;
+  user: string;
   name: string;
   type: string;
+  created_at: string;
+  updated_at: string;
 };
 
 type Props = {

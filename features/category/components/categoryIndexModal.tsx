@@ -4,6 +4,7 @@ import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import useIndexCategory from "../hooks/useIndexCategoryHook";
 import StoreCategoryButton from "./categoryStoreButton";
 import UpdateCategoryModal from "./categoryUpdateModal";
+import DeleteCategoryButton from "./categoryDeleteButton";
 
 type Props = {
   isOpen: boolean;
@@ -11,7 +12,7 @@ type Props = {
 };
 
 export default function IndexCategoryModal({ isOpen, onClose }: Props) {
-  const { categories, isLoading, error } = useIndexCategory();
+  const { categories, isLoading, error, refetch } = useIndexCategory();
 
   return (
     <Dialog
@@ -51,8 +52,15 @@ export default function IndexCategoryModal({ isOpen, onClose }: Props) {
                         )
                       </span>
 
-                      {/* ここでcategoryをpropsとして渡す */}
-                      <UpdateCategoryModal category={category} />
+                      <div className="flex flex-shrink-0 items-center space-x-2">
+                        <UpdateCategoryModal
+                          category={category}
+                        />
+                        <DeleteCategoryButton
+                          categoryId={category.id}
+                          onDeleted={refetch}
+                        />
+                      </div>
                     </li>
                   ))}
                 </ul>
