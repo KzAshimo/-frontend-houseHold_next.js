@@ -2,11 +2,11 @@
 
 import { useState } from "react";
 import { useSWRConfig } from "swr";
-import InputFormModal from "@/components/items/modal/inputModal";
-import { CategoryForm } from "./categoryStoreForm";
 import { Button } from "@headlessui/react";
+import Modal from "./categoryStoreModal";
+import { CategoryForm } from "./categoryStoreForm";
 
-const StoreCategoryButton = () => {
+export default function StoreCategoryButton() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { mutate } = useSWRConfig();
 
@@ -19,25 +19,17 @@ const StoreCategoryButton = () => {
   };
 
   return (
-    <>
-      <div className="m-3">
-        <Button
-          className="inline-flex items-center gap-2 rounded-md bg-gray-700 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:not-data-focus:outline-none data-focus:outline data-focus:outline-white data-hover:bg-gray-600 data-open:bg-gray-700"
-          onClick={openModal}
-        >
-          カテゴリ登録
-        </Button>
+    <div className="m-3">
+      <Button
+        className="inline-flex items-center gap-2 rounded-md bg-gray-700 px-3 py-3 text-white hover:bg-gray-600"
+        onClick={openModal}
+      >
+        カテゴリ登録
+      </Button>
 
-        <InputFormModal
-          isOpen={isModalOpen}
-          onClose={closeModal}
-          title="カテゴリ登録"
-        >
-          <CategoryForm onSuccess={handleSuccess} />
-        </InputFormModal>
-      </div>
-    </>
+      <Modal isOpen={isModalOpen} onClose={closeModal} title="カテゴリ登録">
+        <CategoryForm onSuccess={handleSuccess} />
+      </Modal>
+    </div>
   );
-};
-
-export default StoreCategoryButton;
+}
