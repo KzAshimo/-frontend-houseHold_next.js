@@ -2,6 +2,7 @@ import useLogout from "@/features/auth/hooks/useLogoutHook";
 import IndexCategoryModal from "@/features/category/components/categoryIndexModal";
 import ExpenseStoreModal from "@/features/expense/components/expenseStoreModal";
 import IncomeStoreModal from "@/features/income/components/incomeStoreModal";
+import IndexNotificationModal from "@/features/notification/components/notificationIndexModal";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import {
   Bars3Icon,
@@ -18,6 +19,7 @@ const HeaderDropdownMenu = () => {
   const [isExpenseModalOpen, setIsExpenseModalOpen] = useState(false);
   const [isIncomeModalOpen, setIsIncomeModalOpen] = useState(false);
   const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
+  const [isNotificationModalOpen, setIsNotificationModalOpen] = useState(false);
 
   return (
     <div className="w-52 text-right">
@@ -69,14 +71,16 @@ const HeaderDropdownMenu = () => {
             </kbd>
           </MenuItem>
 
-          <MenuItem>
-            <button className="group flex w-full items-center gap-2 rounded-lg px-3 py-1.5 data-focus:bg-white/10">
+          <MenuItem
+          as="button"
+          onClick={()=> setIsNotificationModalOpen(true)}
+          className="group flex w-full items-center gap-2 rounded-lg px-3 py-1.5 data-focus:bg-white/10"
+          >
               <BellAlertIcon className="size-4 fill-white/50" />
-              通知
+              お知らせ
               <kbd className="ml-auto hidden font-sans text-xs text-white/50 group-data-focus:inline">
                 追加 / 編集
               </kbd>
-            </button>
           </MenuItem>
 
           <MenuItem>
@@ -115,6 +119,14 @@ const HeaderDropdownMenu = () => {
           isOpen={isIncomeModalOpen}
           setIsOpen={setIsIncomeModalOpen}
           onSuccess={() => setIsIncomeModalOpen(false)}
+        />
+      )}
+
+      {/* お知らせモーダル */}
+      {isNotificationModalOpen && (
+        <IndexNotificationModal
+        isOpen={isNotificationModalOpen}
+        onClose={() => setIsNotificationModalOpen(false)}
         />
       )}
     </div>
