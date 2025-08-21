@@ -1,6 +1,7 @@
 "use client";
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import useIndexNotification from "../hooks/useIndexNotificationHook";
+import NotificationStoreButton from "./notificatonStoreButton";
 
 type Props = {
   isOpen: boolean;
@@ -34,7 +35,7 @@ const IndexNotificationModal = ({ isOpen, onClose }: Props) => {
                   <tr>
                     <th className="px-2 py-2 w-1/4">入力者</th>
                     <th className="px-2 py-2 w-1/4">タイトル</th>
-                    <th className="px-2 py-2 w-1/4">公開</th>
+                    <th className="px-2 py-2 w-1/4">公開頻度</th>
                     <th className="px-2 py-2 w-1/4">編集</th>
                   </tr>
                 </thead>
@@ -80,7 +81,9 @@ const IndexNotificationModal = ({ isOpen, onClose }: Props) => {
                 </tbody>
               </table>
             </div>
-            <div className=" mt-3 text-right">
+            <div className=" mt-3 text-right flex justify-end">
+              <NotificationStoreButton />
+
               <button
                 className="rounded-md bg-gray-700 px-4 py-2 text-sm font-medium text-white hover:bg-gray-600"
                 onClick={onClose}
