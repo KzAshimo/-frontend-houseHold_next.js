@@ -21,7 +21,7 @@ type Notification = {
 };
 
 type Props = {
-  notification: Notification | null; // null も許容
+  notification: Notification | null;
   isOpen: boolean;
   onClose: () => void;
 };
@@ -74,7 +74,7 @@ const NotificationUpdateModal = ({ notification, isOpen, onClose }: Props) => {
         <Form
           onSubmit={handleSubmit}
           isLoading={isLoading}
-          submitText="更新する"
+          submitText="更新"
           error={error}
         >
           <TitleInput />
