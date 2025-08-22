@@ -30,7 +30,9 @@ const NotificationUpdateModal = ({ notification, isOpen, onClose }: Props) => {
   const { updateNotification, isLoading, error } = useUpdateNotification();
   const { refetch } = useIndexNotification();
 
-  const methods = useForm<Omit<Notification, "id" | "user" | "created_at" | "updated_at">>({
+  const methods = useForm<
+    Omit<Notification, "id" | "user" | "created_at" | "updated_at">
+  >({
     defaultValues: {
       title: "",
       content: "",
@@ -69,7 +71,12 @@ const NotificationUpdateModal = ({ notification, isOpen, onClose }: Props) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="通知の編集">
       <FormProvider {...methods}>
-        <Form onSubmit={handleSubmit} isLoading={isLoading} submitText="更新する" error={error}>
+        <Form
+          onSubmit={handleSubmit}
+          isLoading={isLoading}
+          submitText="更新する"
+          error={error}
+        >
           <TitleInput />
           <ContentInput />
           <TypeInput />
@@ -99,13 +106,9 @@ function TitleInput() {
               errors.title ? "border-red-500" : "border-white"
             }`}
         />
-        {errors.title ? (
+        {errors.title && (
           <Description className="text-sm text-red-500 mt-1">
             {errors.title.message}
-          </Description>
-        ) : (
-          <Description className="text-sm text-white/50 mt-1">
-            お知らせの見出しを入力してください
           </Description>
         )}
       </Field>
@@ -131,13 +134,9 @@ function ContentInput() {
         errors.content ? "border-red-500" : "border-white"
       }`}
         />
-        {errors.content ? (
+        {errors.content && (
           <Description className="text-sm text-red-500 mt-1">
             {errors.content.message}
-          </Description>
-        ) : (
-          <Description className="text-sm text-white/50 mt-1">
-            ユーザーに表示されるお知らせの本文を入力してください
           </Description>
         )}
       </Field>
