@@ -24,7 +24,7 @@ const NotificationStoreButton = () => {
         className="inline-flex items-center gap-2 rounded-md bg-gray-700 px-3 py-3 text-white hover:bg-gray-600"
         onClick={openModal}
       >
-        カテゴリ登録
+        お知らせ登録
       </Button>
 
       <Modal isOpen={isModalOpen} onClose={closeModal} title="カテゴリ登録">

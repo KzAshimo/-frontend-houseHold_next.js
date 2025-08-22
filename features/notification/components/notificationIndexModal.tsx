@@ -1,7 +1,8 @@
 "use client";
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import useIndexNotification from "../hooks/useIndexNotificationHook";
-import NotificationStoreButton from "./notificatonStoreButton";
+import NotificationStoreButton from "./notificationStoreButton";
+import NotificationUpdateButton from "./notificationUpdateButton";
 
 type Props = {
   isOpen: boolean;
@@ -75,6 +76,11 @@ const IndexNotificationModal = ({ isOpen, onClose }: Props) => {
                             : notification.type === "once"
                             ? "1度のみ"
                             : notification.type}
+                        </td>
+                        <td className="px-2 py-2">
+                          <NotificationUpdateButton
+                            notification={notification}
+                          />
                         </td>
                       </tr>
                     ))}

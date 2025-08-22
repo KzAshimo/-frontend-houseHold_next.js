@@ -22,7 +22,7 @@ const useUpdateNotification = () => {
         setError(null);
 
         try{
-            await axiosInstance.put(`api/v1/notification/${notificationId}`, payload);]
+            await axiosInstance.put(`api/v1/notification/${notificationId}`, payload);
             return true;
         }catch (err){
             setError(handleApiError(err));
