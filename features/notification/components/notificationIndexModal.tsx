@@ -3,6 +3,7 @@ import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import useIndexNotification from "../hooks/useIndexNotificationHook";
 import NotificationStoreButton from "./notificationStoreButton";
 import NotificationUpdateButton from "./notificationUpdateButton";
+import NotificationDeleteButton from "./notificatonDeleteButton";
 
 type Props = {
   isOpen: boolean;
@@ -10,7 +11,7 @@ type Props = {
 };
 
 const IndexNotificationModal = ({ isOpen, onClose }: Props) => {
-  const { notifications, isLoading, error } = useIndexNotification();
+  const { notifications, isLoading, error, refetch } = useIndexNotification();
 
   return (
     <Dialog
@@ -77,11 +78,15 @@ const IndexNotificationModal = ({ isOpen, onClose }: Props) => {
                             ? "1度のみ"
                             : notification.type}
                         </td>
-                        <td className="px-2 py-2">
-                          <NotificationUpdateButton
-                            notification={notification}
-                          />
-                        </td>
+                          <td className="px-2 py-2 flex flex-shrink-0 items-center space-x-2">
+                            <NotificationUpdateButton
+                              notification={notification}
+                            />
+                            <NotificationDeleteButton
+                              notificationId={notification.id}
+                              onDeleted={refetch}
+                            />
+                          </td>
                       </tr>
                     ))}
                 </tbody>
