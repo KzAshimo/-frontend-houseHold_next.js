@@ -29,7 +29,7 @@ const useLogin = () => {
     try {
       await axios.post("/login", data, { withCredentials: true });
 
-      router.push("/dashboard");
+      router.push("/dashboard?fromLogin=1");
     } catch (err) {
       if (err instanceof AxiosError && err.response) {
         const responseData = err.response.data as ErrorResponse;

@@ -5,6 +5,7 @@ import Header from "@/components/header/header";
 import ExpenseTable from "@/features/expense/components/expenseTable";
 import IncomeTable from "@/features/income/components/incomeTable";
 import "../../app/globals.css";
+import LoginNotificationModal from "@/features/notification/components/notificationForLoginModal";
 
 const DashboardPage = () => {
   const [showExpense, setShowExpense] = useState(true);
@@ -13,6 +14,7 @@ const DashboardPage = () => {
     <div className="bg-gradient-to-r from-amber-350 from-10% via-sky-950 via-30% to-slate-950 to-75%">
       <Header onToggleView={setShowExpense} />
       {showExpense ? <ExpenseTable /> : <IncomeTable />}
+      <LoginNotificationModal />
     </div>
   );
 };

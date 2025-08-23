@@ -38,7 +38,7 @@ const LoginNotificationModal = () => {
       onClose={() => setShowModal(false)}
       className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50"
     >
-      <Dialog.Panel className="bg-white rounded-lg p-6 w-full max-w-md">
+      <Dialog.Panel className="bg-black/70 rounded-lg p-6 w-full max-w-md">
         {currentNotification && (
           <>
             <Dialog.Title className="text-lg font-bold mb-2">
@@ -56,7 +56,7 @@ const LoginNotificationModal = () => {
               </button>
               <button
                 onClick={handleNext}
-                className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+                className="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500"
               >
                 次へ
               </button>
