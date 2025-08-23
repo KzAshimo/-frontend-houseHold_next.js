@@ -4,12 +4,14 @@ import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { Dialog } from "@headlessui/react";
 import useForLoginNotificationHook from "../hooks/useForLoginNotificationHook";
+import NotificationViewed from "@/features/notification_view/components/notificationViewed";
 
 const LoginNotificationModal = () => {
   const [showModal, setShowModal] = useState(false);
   const searchParams = useSearchParams();
 
-  const { currentNotification, nextNotification, notifications } = useForLoginNotificationHook();
+  const { currentNotification, nextNotification, notifications } =
+    useForLoginNotificationHook();
 
   // ログインページから遷移した場合のみモーダル表示
   useEffect(() => {
@@ -41,6 +43,9 @@ const LoginNotificationModal = () => {
       <Dialog.Panel className="bg-black/70 rounded-lg p-6 w-full max-w-md">
         {currentNotification && (
           <>
+            {/* 既読登録 */}
+            <NotificationViewed notificationId={currentNotification.id} />
+
             <Dialog.Title className="text-lg font-bold mb-2">
               {currentNotification.title}
             </Dialog.Title>
