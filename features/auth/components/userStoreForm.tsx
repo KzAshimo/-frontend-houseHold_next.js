@@ -1,5 +1,6 @@
 import { useForm } from "react-hook-form";
 import useStoreUserHook from "../hooks/useStoreUserHook";
+import Link from "next/link";
 
 type UserStoreInputs = {
   name: string;
@@ -57,7 +58,9 @@ export const StoreForm = () => {
           type="password"
           className="w-full border border-gray-600 px-3 py-2 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-blue-300"
         />
-        {errors.password && <p className="text-red-500">{errors.password.message}</p>}
+        {errors.password && (
+          <p className="text-red-500">{errors.password.message}</p>
+        )}
       </div>
 
       {/* 確認用パスワード */}
@@ -84,9 +87,15 @@ export const StoreForm = () => {
           {...register("role", { required: "ロールは必須です" })}
           className="w-full border border-gray-600 px-3 py-2 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-blue-300"
         >
-          <option value="" className="bg-slate-600">選択してください</option>
-          <option value="user" className="bg-slate-600">ユーザ</option>
-          <option value="admin" className="bg-slate-600">管理者</option>
+          <option value="" className="bg-slate-600">
+            選択してください
+          </option>
+          <option value="user" className="bg-slate-600">
+            ユーザ
+          </option>
+          <option value="admin" className="bg-slate-600">
+            管理者
+          </option>
         </select>
         {errors.role && <p className="text-red-500">{errors.role.message}</p>}
       </div>
@@ -96,10 +105,15 @@ export const StoreForm = () => {
       <button
         type="submit"
         disabled={isLoading}
-        className="inline-flex items-center gap-2 rounded-md bg-gray-700 px-3 py-3 text-white hover:bg-gray-600"
+        className="w-full bg-red-600/60 text-white py-2 px-4 rounded-md hover:bg-slate-700 disabled:opacity-50"
       >
         {isLoading ? "登録中..." : "登録"}
       </button>
+      <Link href="/login" className="block">
+        <span className="text-center block w-full bg-rose-600/60 text-white py-2 px-4 rounded-md hover:bg-slate-700 disabled:opacity-50">
+          戻る
+        </span>
+      </Link>
     </form>
   );
 };
