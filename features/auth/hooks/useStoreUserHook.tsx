@@ -1,5 +1,6 @@
 import axiosInstance from "@/lib/axios";
 import handleApiError from "@/lib/handleApiError";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 type UserPayload = {
@@ -12,12 +13,14 @@ type UserPayload = {
 const useStoreUserHook = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
 
   const storeUser = async (payload: UserPayload) => {
     setIsLoading(true);
     setError(null);
     try {
       await axiosInstance.post("/api/v1/user/store", payload);
+      router.push("/login");
     } catch (err) {
       setError(handleApiError(err));
     } finally {
