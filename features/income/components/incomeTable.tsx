@@ -3,6 +3,7 @@ import useIncomeIndex from "@/features/income/hooks/useIndexIncomeHook";
 import UpdateIncomeModal from "./incomeUpdateModal";
 import DeleteIncomeButton from "./incomeDeleteButton";
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
+import ExpenseIncomeSummaryTable from "@/features/expense_income/components/expenceIncomeSummary";
 
 const IncomeTable = () => {
   const {
@@ -15,20 +16,44 @@ const IncomeTable = () => {
   const [selectedMonth, setSelectedMonth] = useState<string | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
-  // 月リスト
-  const months = useMemo(
+  // ✅ 年リスト
+  const years = useMemo(
     () =>
       Array.from(
         new Set(
           initialIncome.map((i) =>
-            new Date(i.created_at).toLocaleString("ja-JP", {
-              year: "numeric",
-              month: "short",
-            })
+            new Date(i.created_at).getFullYear().toString()
           )
         )
-      ),
+      ).sort((a, b) => Number(b) - Number(a)), // 新しい年を先頭に
     [initialIncome]
+  );
+
+  // ✅ 選択中の年（デフォルトは最新の年）
+  const [selectedYear, setSelectedYear] = useState<string | null>(null);
+  if (selectedYear === null && years.length > 0) {
+    setSelectedYear(years[0]);
+  }
+
+  // ✅ 月リスト（選択した年だけ）
+  const months = useMemo(
+    () =>
+      Array.from(
+        new Set(
+          initialIncome
+            .filter(
+              (i) =>
+                new Date(i.created_at).getFullYear().toString() === selectedYear
+            )
+            .map((i) =>
+              new Date(i.created_at).toLocaleString("ja-JP", {
+                year: "numeric",
+                month: "short",
+              })
+            )
+        )
+      ),
+    [initialIncome, selectedYear]
   );
 
   // カテゴリリスト
@@ -71,6 +96,23 @@ const IncomeTable = () => {
 
   return (
     <div className="m-5 space-y-6">
+      <ExpenseIncomeSummaryTable/>
+      {/* ✅ 年セレクト */}
+      <div className="mb-4">
+        <label className="mr-2 text-white font-bold">年を選択:</label>
+        <select
+          className="rounded-md bg-gray-700 text-white px-2 py-1"
+          value={selectedYear ?? ""}
+          onChange={(e) => setSelectedYear(e.target.value)}
+        >
+          {years.map((year) => (
+            <option key={year} value={year}>
+              {year}年
+            </option>
+          ))}
+        </select>
+      </div>
+
       {months.map((month) => (
         <div key={month}>
           <h2 className="text-lg font-bold mb-3">{month}</h2>
@@ -94,6 +136,7 @@ const IncomeTable = () => {
         </div>
       ))}
 
+      {/* ✅ モーダル */}
       <Dialog
         open={isModalOpen}
         onClose={() => setIsModalOpen(false)}
