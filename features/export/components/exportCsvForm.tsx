@@ -5,21 +5,23 @@ import useStoreExportHook from "@/features/export/hooks/useStoreExportHook";
 import useExportHook from "@/features/export/hooks/useExportHook";
 import useDownloadExportHook from "@/features/export/hooks/useDownloadExportHook";
 
-type ExportItem = {
-  id: number;
-  user_id: number;
-  type: string;
-  period_from: string;
-  period_to: string;
-  file_name?: string;
-  file_path?: string;
-  status: string;
-};
-
 const ExportCsvForm = () => {
-  const { storeExport, isLoading: isStoring, error: storeError } = useStoreExportHook();
-  const { exportData, runExport, isLoading: isExporting, error: exportError } = useExportHook();
-  const { downloadExport, isLoading: isDownloading, error: downloadError } = useDownloadExportHook();
+  const {
+    storeExport,
+    isLoading: isStoring,
+    error: storeError,
+  } = useStoreExportHook();
+  const {
+    exportData,
+    runExport,
+    isLoading: isExporting,
+    error: exportError,
+  } = useExportHook();
+  const {
+    downloadExport,
+    isLoading: isDownloading,
+    error: downloadError,
+  } = useDownloadExportHook();
 
   const [form, setForm] = useState({
     type: "",
@@ -28,39 +30,45 @@ const ExportCsvForm = () => {
     fileName: "",
   });
 
-  // --- フォーム入力変更 ---
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  // --- データ登録 ---
   const handleStore = async () => {
     await storeExport(form);
   };
 
-  // --- CSV 変換 ---
-const handleExport = async (exportId: number) => {
+  const handleExport = async (exportId: number) => {
     await runExport({ exportId });
-};
+  };
 
-  // --- CSV ダウンロード ---
   const handleDownload = async (exportId: number, fileName?: string) => {
     await downloadExport(exportId, fileName);
   };
 
   return (
     <div className="p-4 space-y-4">
-      <h2 className="text-xl font-bold">CSV エクスポート</h2>
 
       {/* フォーム */}
       <div className="space-y-2">
-        <input
+        <select
           name="type"
-          placeholder="タイプ"
           value={form.type}
           onChange={handleChange}
           className="border p-1"
-        />
+        >
+          <option value="" className="bg-slate-600">
+            選択してください
+          </option>
+          <option value="income" className="bg-slate-600">
+            収入
+          </option>
+          <option value="expense" className="bg-slate-600">
+            支出
+          </option>
+        </select>
         <input
           name="periodFrom"
           type="date"
@@ -92,13 +100,16 @@ const handleExport = async (exportId: number) => {
         {storeError && <p className="text-red-500">{storeError}</p>}
       </div>
 
-      {/* 登録済みエクスポート */}
-      {exportData && (
+      {/* 登録済みエクスポートは、exportData が存在する場合のみ表示 */}
+      {exportData && exportData.export && (
         <div>
           <h3 className="font-semibold">登録済みエクスポート</h3>
           <ul className="space-y-2">
             <li className="flex items-center space-x-2">
-              <span>{exportData.export.file_name || `export_${exportData.export.id}`}</span>
+              <span>
+                {exportData.export.file_name ||
+                  `export_${exportData.export.id}`}
+              </span>
               <button
                 onClick={() => handleExport(exportData.export.id)}
                 disabled={isExporting}
@@ -107,7 +118,12 @@ const handleExport = async (exportId: number) => {
                 {isExporting ? "変換中..." : "変換"}
               </button>
               <button
-                onClick={() => handleDownload(exportData.export.id, exportData.export.file_name)}
+                onClick={() =>
+                  handleDownload(
+                    exportData.export.id,
+                    exportData.export.file_name
+                  )
+                }
                 disabled={isDownloading}
                 className="bg-green-500 text-white px-2 py-1 rounded"
               >
