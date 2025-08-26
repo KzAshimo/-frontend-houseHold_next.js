@@ -5,26 +5,27 @@ import useExpenseIncomeSummaryHook from "../hooks/useExpenseIncomeSummaryHook";
 
 const ExpenseIncomeSummaryTable = () => {
   const { summaries, isLoading } = useExpenseIncomeSummaryHook();
-  const [selectedYear, setSelectedYear] = useState<string>("");
 
-  if (isLoading) return <p>読み込み中...</p>;
-
+  // 年リストを useMemo で作成
   const years = useMemo(() => {
     const y = Array.from(
-      new Set(summaries.map((s) => s.month.split("-")[0])) // "2025-08" → "2025"
+      new Set(summaries.map((s) => s.month.split("-")[0]))
     );
     return y.sort().reverse();
   }, [summaries]);
 
-  // 初期選択
-  if (!selectedYear && years.length > 0) {
-    setSelectedYear(years[0]);
-  }
+  // 初期選択は最新の年
+  const [selectedYear, setSelectedYear] = useState<string>(
+    years.length > 0 ? years[0] : ""
+  );
 
-  // 選択した年の summaries を取得
-  const filtered = [...summaries]
-    .filter((s) => s.month.startsWith(selectedYear))
-    .reverse();
+  // 選択した年の summaries を useMemo で取得
+  const filtered = useMemo(
+    () => [...summaries].filter((s) => s.month.startsWith(selectedYear)).reverse(),
+    [summaries, selectedYear]
+  );
+
+  if (isLoading) return <p>読み込み中...</p>;
 
   return (
     <div className="space-y-6">
@@ -33,7 +34,7 @@ const ExpenseIncomeSummaryTable = () => {
         <label className="mr-2 text-white font-bold">年を選択:</label>
         <select
           className="rounded-md bg-gray-700 text-white px-2 py-1"
-          value={selectedYear ?? ""}
+          value={selectedYear}
           onChange={(e) => setSelectedYear(e.target.value)}
         >
           {years.map((year) => (
@@ -51,24 +52,18 @@ const ExpenseIncomeSummaryTable = () => {
             key={s.month}
             className="flex-shrink-0 w-64 bg-gray-800/60 shadow rounded-lg border p-4 hover:shadow-lg transition text-white"
           >
-            {/* 月 */}
-            <div className="text-lg font-bold mb-3">
-              {s.month.split("-")[1]}月
-            </div>
+            <div className="text-lg font-bold mb-3">{s.month.split("-")[1]}月</div>
 
-            {/* 収入 */}
             <div className="flex justify-between text-emerald-400">
               <span>収入</span>
               <span>{s.incomeTotal.toLocaleString()} 円</span>
             </div>
 
-            {/* 支出 */}
             <div className="flex justify-between text-rose-400 mt-2">
               <span>支出</span>
               <span>{s.expenseTotal.toLocaleString()} 円</span>
             </div>
 
-            {/* 差額 */}
             <div
               className={`flex justify-between mt-3 text-lg font-bold ${
                 s.balance >= 0 ? "text-white" : "text-rose-300"
