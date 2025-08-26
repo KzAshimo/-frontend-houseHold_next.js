@@ -14,7 +14,7 @@ const LoginPage = () => {
         {/* 新規登録ボタン */}
         <div className="mt-6 text-center">
           <Link href="/register" className="block">
-            <span className="block w-full bg-rose-600/60 text-white py-2 px-4 rounded-md hover:bg-slate-700 disabled:opacity-50">
+            <span className="block w-full bg-violet-600/60 text-white py-2 px-4 rounded-md hover:bg-slate-700 disabled:opacity-50">
               User登録
             </span>
           </Link>

@@ -110,7 +110,7 @@ export const StoreForm = () => {
         {isLoading ? "登録中..." : "登録"}
       </button>
       <Link href="/login" className="block">
-        <span className="text-center block w-full bg-rose-600/60 text-white py-2 px-4 rounded-md hover:bg-slate-700 disabled:opacity-50">
+        <span className="text-center block w-full bg-violet-600/60 text-white py-2 px-4 rounded-md hover:bg-slate-700 disabled:opacity-50">
           戻る
         </span>
       </Link>
