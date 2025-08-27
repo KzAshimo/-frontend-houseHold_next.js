@@ -1,13 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import useIncomeUpdate from "../hooks/useUpdateIncomeHook";
-import useIncomeIndex from "../hooks/useIndexIncomeHook";
 import { useFormContext } from "react-hook-form";
 import { KeyedMutator } from "swr";
 import { Button } from "@headlessui/react";
 import Modal from "@/components/items/modal";
 import Form from "@/components/items/form";
+import useIndexIncome from "../hooks/UseIndexIncomeHook";
+import useUpdateIncome from "../hooks/UseUpdateIncomeHook";
 
 type Income = {
   id: number;
@@ -32,8 +32,8 @@ type Props = {
 
 export default function UpdateIncomeModal({ incomeId, defaultValues }: Props) {
   const [isOpen, setIsOpen] = useState(false);
-  const { updateIncome, isLoading, error } = useIncomeUpdate();
-  const { refetch } = useIncomeIndex();
+  const { updateIncome, isLoading, error } = useUpdateIncome();
+  const { refetch } = useIndexIncome();
 
   const handleSubmit = async (data: typeof defaultValues) => {
     await updateIncome(incomeId, data);

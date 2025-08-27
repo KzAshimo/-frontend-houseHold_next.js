@@ -3,8 +3,8 @@
 import { Dialog, DialogPanel, DialogTitle, Button } from '@headlessui/react';
 import { useForm, FormProvider } from "react-hook-form";
 import useUser from "@/features/auth/hooks/useUserHook";
-import useStoreIncome from '../hooks/useStoreIncomeHook';
 import IncomeFormFields, { IncomeFormData } from './incomeStoreForm';
+import useStoreIncome from '../hooks/UseStoreIncomeHook';
 
 export default function IncomeStoreModal({
   isOpen,
