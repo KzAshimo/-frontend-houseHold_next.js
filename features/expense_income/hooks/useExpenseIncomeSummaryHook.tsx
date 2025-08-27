@@ -1,7 +1,7 @@
 "use client";
 
 import useExpenseIndex from "@/features/expense/hooks/useIndexExpenseHook";
-import useIndexIncome from "@/features/income/hooks/useIndexIncomeHook";
+import useIndexIncome from "@/features/income/hooks/useIndexIncomeHooks";
 import { useMemo } from "react";
 
 type MonthlySummary = {
