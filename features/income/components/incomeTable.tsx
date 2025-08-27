@@ -1,9 +1,9 @@
 import { useState, useMemo } from "react";
-import useIncomeIndex from "@/features/income/hooks/useIndexIncomeHooks";
 import UpdateIncomeModal from "./incomeUpdateModal";
 import DeleteIncomeButton from "./incomeDeleteButton";
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import ExpenseIncomeSummaryTable from "@/features/expense_income/components/expenceIncomeSummary";
+import useIndexIncome from "../hooks/UseIndexIncomeHook";
 
 const IncomeTable = () => {
   const {
@@ -11,7 +11,7 @@ const IncomeTable = () => {
     isLoading,
     error,
     refetch,
-  } = useIncomeIndex();
+  } = useIndexIncome();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedMonth, setSelectedMonth] = useState<string | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
