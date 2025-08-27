@@ -1,8 +1,8 @@
 "use client";
 
 import { Button } from "@headlessui/react";
-import useIncomeDelete from "../hooks/useDeleteIncomeHook";
 import { KeyedMutator } from "swr";
+import useDeleteIncome from "../hooks/UseDeleteIncomeHook";
 
 type Income = {
   id: number;
@@ -21,7 +21,7 @@ type Props = {
 };
 
 export default function DeleteIncomeButton({ incomeId, onDeleted }: Props) {
-  const { deleteIncome, isLoading, error } = useIncomeDelete();
+  const { deleteIncome, isLoading, error } = useDeleteIncome();
 
   const handleClick = async () => {
     if (!confirm("本当に削除しますか？")) return;

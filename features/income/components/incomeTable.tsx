@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react";
-import useIncomeIndex from "@/features/income/hooks/useIndexIncomeHook";
+import useIncomeIndex from "@/features/income/hooks/useIndexIncomeHooks";
 import UpdateIncomeModal from "./incomeUpdateModal";
 import DeleteIncomeButton from "./incomeDeleteButton";
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
