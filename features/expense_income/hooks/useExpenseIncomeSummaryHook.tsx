@@ -5,7 +5,7 @@ import useIndexIncome from "@/features/income/hooks/useIndexIncomeHook";
 import { useMemo } from "react";
 
 type MonthlySummary = {
-  month: string; // YYYY-MM
+  month: string;
   incomeTotal: number;
   expenseTotal: number;
   balance: number;

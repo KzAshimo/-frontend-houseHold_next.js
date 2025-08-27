@@ -2,7 +2,7 @@ import { useState, useMemo } from "react";
 import UpdateIncomeModal from "./incomeUpdateModal";
 import DeleteIncomeButton from "./incomeDeleteButton";
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
-import ExpenseIncomeSummaryTable from "@/features/expense_income/components/expenceIncomeSummary";
+import ExpenseIncomeSummaryTable from "@/features/expense_income/components/expenseIncomeSummary";
 import useIndexIncome from "../hooks/useIndexIncomeHook";
 
 const IncomeTable = () => {
