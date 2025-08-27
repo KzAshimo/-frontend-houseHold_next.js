@@ -23,16 +23,16 @@ type ExportPayload = {
 const useExportHook = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [result, setResult] = useState<Export>(null);
+  const [exportData, setExportData] = useState<Export>(null);
 
-  const exportCsv = async ({ exportId }: ExportPayload) => {
+  const runExport = async ({ exportId }: ExportPayload) => {
     setIsLoading(true);
     setError(null);
-    setResult(null);
+    setExportData(null);
 
     try {
       const res = await axiosInstance.post(`/api/v1/export/${exportId}/export`);
-      setResult(res.data);
+      setExportData(res.data);
     } catch (err) {
       setError(handleApiError(err));
     } finally {
@@ -41,8 +41,8 @@ const useExportHook = () => {
   };
 
   return {
-    exportCsv,
-    result,
+    exportData,
+    runExport,
     isLoading,
     error,
   };
