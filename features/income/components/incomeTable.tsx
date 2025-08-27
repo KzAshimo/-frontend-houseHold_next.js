@@ -3,7 +3,7 @@ import UpdateIncomeModal from "./incomeUpdateModal";
 import DeleteIncomeButton from "./incomeDeleteButton";
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import ExpenseIncomeSummaryTable from "@/features/expense_income/components/expenceIncomeSummary";
-import useIndexIncome from "../hooks/UseIndexIncomeHook";
+import useIndexIncome from "../hooks/useIndexIncomeHook";
 
 const IncomeTable = () => {
   const {
