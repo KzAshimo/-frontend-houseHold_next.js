@@ -5,7 +5,7 @@ import useExpenseIndex from "@/features/expense/hooks/useIndexExpenseHook";
 import DeleteExpenseButton from "./expenseDeleteButton";
 import UpdateExpenseModal from "./expenseUpdateModal";
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
-import ExpenseIncomeSummaryTable from "@/features/expense_income/components/expenceIncomeSummary";
+import ExpenseIncomeSummaryTable from "@/features/expense_income/components/expenseIncomeSummary";
 
 const ExpenseTable = () => {
   const {
