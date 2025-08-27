@@ -1,4 +1,4 @@
-import { Form } from "@/features/auth/components/formComponent";
+import { Form } from "@/features/auth/components/FormComponent";
 import "../../app/globals.css";
 import Link from "next/link";
 
