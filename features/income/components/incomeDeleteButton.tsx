@@ -2,7 +2,7 @@
 
 import { Button } from "@headlessui/react";
 import { KeyedMutator } from "swr";
-import useDeleteIncome from "../hooks/UseDeleteIncomeHook";
+import useDeleteIncome from "../hooks/useDeleteIncomeHook";
 
 type Income = {
   id: number;

@@ -6,8 +6,8 @@ import { KeyedMutator } from "swr";
 import { Button } from "@headlessui/react";
 import Modal from "@/components/items/modal";
 import Form from "@/components/items/form";
-import useIndexIncome from "../hooks/UseIndexIncomeHook";
-import useUpdateIncome from "../hooks/UseUpdateIncomeHook";
+import useUpdateIncome from "../hooks/useUpdateIncomeHook";
+import useIndexIncome from "../hooks/useIndexIncomeHook";
 
 type Income = {
   id: number;
