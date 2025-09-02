@@ -1,12 +1,14 @@
 import { useForm } from "react-hook-form";
 import useStoreUserHook from "../hooks/useStoreUserHook";
 import Link from "next/link";
+import { useEffect } from "react";
+import axiosInstance from "@/lib/axios";
 
 type UserStoreInputs = {
   name: string;
   email: string;
   password: string;
-  password_confirmation: string; // 追加
+  password_confirmation: string;
   role: string;
 };
 
@@ -22,6 +24,17 @@ export const StoreForm = () => {
   const onSubmit = (data: UserStoreInputs) => {
     storeUser(data);
   };
+
+  useEffect(() => {
+    const fetchCsrfToken = async () => {
+      try{
+        await axiosInstance.get('sanctum/csrf-cookie');
+      }catch(err){
+        console.error("CSRF token fetch error:", err);
+      }
+    };
+    fetchCsrfToken();
+  },[]);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 text-white">
@@ -56,6 +69,7 @@ export const StoreForm = () => {
             minLength: { value: 8, message: "パスワードは8文字以上です" },
           })}
           type="password"
+          autoComplete="new-password"
           className="w-full border border-gray-600 px-3 py-2 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-blue-300"
         />
         {errors.password && (
@@ -73,6 +87,7 @@ export const StoreForm = () => {
               value === watch("password") || "パスワードが一致しません",
           })}
           type="password"
+          autoComplete="new-password"
           className="w-full border border-gray-600 px-3 py-2 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-blue-300"
         />
         {errors.password_confirmation && (
