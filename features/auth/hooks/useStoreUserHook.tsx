@@ -19,6 +19,9 @@ const useStoreUserHook = () => {
     setIsLoading(true);
     setError(null);
     try {
+      // CSRFトークン取得
+      await axiosInstance.get("sanctum/csrf-cookie");
+
       await axiosInstance.post("/api/v1/user/store", payload);
       router.push("/login");
     } catch (err) {
