@@ -19,7 +19,7 @@ const useStoreUserHook = () => {
     setIsLoading(true);
     setError(null);
     try {
-      await axiosInstance.post("/api/v1/user/store", payload);
+      await axiosInstance.post("/v1/user/store", payload);
       router.push("/login");
     } catch (err) {
       setError(handleApiError(err));
