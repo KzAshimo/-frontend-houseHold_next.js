@@ -24,11 +24,27 @@ const useLogin = () => {
     setIsLoading(true);
     setError(null);
 
-    await axios.get("/sanctum/csrf-cookie", { withCredentials: true });
-
     try {
-      await axios.post("/login", data, { withCredentials: true });
+      // 1.CSRF Cookie取得
+      await axios.get(
+        "https://backend-household-laravel-main-svt1o4.laravel.cloud/sanctum/csrf-cookie",
+        { withCredentials: true }
+      );
 
+      // 2.ログイン post
+      await axios.post(
+        "https://backend-household-laravel-main-svt1o4.laravel.cloud/login",
+        data,
+        {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+        }
+      );
+
+      // 成功時 リダイレクト
       router.push("/dashboard?fromLogin=1");
     } catch (err) {
       if (err instanceof AxiosError && err.response) {
