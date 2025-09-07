@@ -1,8 +1,6 @@
 import { useForm } from "react-hook-form";
 import useStoreUserHook from "../hooks/useStoreUserHook";
 import Link from "next/link";
-import { useEffect } from "react";
-import axiosInstance from "@/lib/axios";
 
 type UserStoreInputs = {
   name: string;
@@ -24,17 +22,6 @@ export const StoreForm = () => {
   const onSubmit = (data: UserStoreInputs) => {
     storeUser(data);
   };
-
-  useEffect(() => {
-    const fetchCsrfToken = async () => {
-      try{
-        await axiosInstance.get('sanctum/csrf-cookie');
-      }catch(err){
-        console.error("CSRF token fetch error:", err);
-      }
-    };
-    fetchCsrfToken();
-  },[]);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 text-white">
